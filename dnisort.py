@@ -7,7 +7,7 @@ import argparse
 from argparse import RawTextHelpFormatter
 
 parser = argparse.ArgumentParser(description="""
-Sort a csv database of D'ni words (or any wordlist for that matter) in D'ni
+Sorts a csv database of D'ni words (or any wordlist for that matter) in D'ni
 alphabetical order, using NTS or Dnifont encoding (OTS is too irregular to
 sort properly).
 The program prints to the standard output; to save to a file use
