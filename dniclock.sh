@@ -7,6 +7,6 @@ printf '\e[3;0;0t'       # move the window to the top/left corner of the display
 printf '\033[2J'         # clear screen
 while [ 1 ]; do
 	printf '\033[0;0H\n'  # move to first line
-	dnitime.py -n
+	./dnitime.py -n
 	sleep 1
 done
