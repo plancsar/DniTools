@@ -107,6 +107,9 @@ def nts2ots(in_nts):
 	out_ots = out_ots.replace(u"þ", u"th")
 	out_ots = out_ots.replace(u"ð", u"dh")
 	out_ots = out_ots.replace(u"x", u"kh")
+	out_ots = out_ots.replace(u"u", u"uh")
+	out_ots = out_ots.replace(u"e", u"eh")
+	out_ots = out_ots.replace(u"eheh", u"ee")
 	return out_ots
 
 def nts2dfont(in_nts):
@@ -164,8 +167,8 @@ def nts2lts(in_nts):
 	out_lts = out_lts.replace(u"Ð", u"Dh")
 	out_lts = out_lts.replace(u"x", u"kh")
 	out_lts = out_lts.replace(u"X", u"Kh")
-	out_lts = out_lts.replace(u"c", u"ʦ")
-	out_lts = out_lts.replace(u"C", u"ʦ")
+	out_lts = out_lts.replace(u"c", u"ts")
+	out_lts = out_lts.replace(u"C", u"ts")
 	out_lts = out_lts.replace(u"ç", u"ch")
 	out_lts = out_lts.replace(u"Ç", u"Ch")
 	return out_lts
@@ -243,6 +246,11 @@ def rts2ots(in_rts):
 	out_ots = out_ots.replace(u"OI", u"OY")
 	out_ots = out_ots.replace(u"i", u"ih")
 	out_ots = out_ots.replace(u"I", u"Ih")
+	out_ots = out_ots.replace(u"e", u"eh")
+	out_ots = out_ots.replace(u"E", u"Eh")
+	out_ots = out_ots.replace(u"eheh", u"ee")
+	out_ots = out_ots.replace(u"Eheh", u"Ee")
+	out_ots = out_ots.replace(u"EhEh", u"EE")
 	return out_ots
 
 def dfont2ucsur(in_dfont):
