@@ -1600,11 +1600,14 @@ for word in phrase:
         if translation.endswith("een"):
             translation = translation[:-3]
             translation = translation + "en"
+        if translation.endswith("beginen"):
+            translation = translation[:-7]
+            translation = translation + "begun"
         continue
 
     # SIMPLE PRESENT
 
-    if word.endswith("em") and not word.endswith("kenem"):
+    if word.endswith("em") and word != "rem" and not word.endswith("kenem"):
         word = word[:-2]
         if passive == 1:
             translation = translation + " are " + translate(word) + "ed"
@@ -1763,3 +1766,4 @@ for word in phrase:
 #    engword = engword.replace("de-", "again")
 
 print(translation)
+
