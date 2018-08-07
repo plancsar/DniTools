@@ -128,7 +128,7 @@ if args.dec:
                 spell_text.append(dniDigitsSpellOts[result_dec[-i]] + dniDigitsPowers[i-2] + " ")
 
         spell_str = "".join(map(str,spell_text[::-1]))
-        spell_str = spell_str.replace("torrah", "torah")
+        spell_str = spell_str.replace("rrah", "rah")
         print(spell_str)
 
 
