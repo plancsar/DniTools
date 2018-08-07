@@ -100,9 +100,11 @@ def dni2dec(dni):
 if args.dec:
     resultB = dec2dni(args.dec)
     result = []
+    result_dec = []
     spell_count = 0
     spell_text = []
     for i in range(0,len(resultB)):
+        result_dec.append(resultB[i])
         if resultB[i] == 25:
             break
         spell_count += 1
@@ -122,8 +124,8 @@ if args.dec:
 
     if spell_count < 7:
         for i in range(2,spell_count+2):
-            if dniDigitsSpellOts[resultB[-i]] != "roon":
-                spell_text.append(dniDigitsSpellOts[resultB[-i]] + dniDigitsPowers[i-2] + " ")
+            if dniDigitsSpellOts[result_dec[-i]] != "roon":
+                spell_text.append(dniDigitsSpellOts[result_dec[-i]] + dniDigitsPowers[i-2] + " ")
 
         spell_str = "".join(map(str,spell_text[::-1]))
         spell_str = spell_str.replace("torrah", "torah")
