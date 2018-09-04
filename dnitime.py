@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from __future__ import division
@@ -8,24 +8,21 @@ import argparse
 from argparse import RawTextHelpFormatter
 
 parser = argparse.ArgumentParser(description="""
-Prints the current D'ni date in extended format, and the pahrtahvo as it appears
-on the clock in the Neighborhoods in the Myst Online: Uru Live game.
-Algorithms based on
-Middleton B., 2004 - Date Conversion Techniques For the D'ni Scholar
-(http://home.earthlink.net/~seizuretown/myst/conversion/D%27ni%20Calendar%20Conversion.pdf).
+Prints the current D'ni date, as described in the Myst Online: Uru Live game by Cyan, Inc.
+The date is given as Hahr:Vailee:Yahr (default) or Hahrtee_Fahrah:Vailee:Yahr.
+The time is given as Gahrtahvo:Tahvo:Gorahn:Prorahn (default) or Pahrtahvo:Gorahn:Prorahn.
+Algorithms based on: Middleton B., 2004 - Date Conversion Techniques For the D'ni Scholar (http://home.earthlink.net/~seizuretown/myst/conversion/D%27ni%20Calendar%20Conversion.pdf).
 """, formatter_class=RawTextHelpFormatter)
 
-parser.add_argument("-n", "--nts", help="use the New Transliteration System for \
-vailee", action="store_true")
-parser.add_argument("-d", "--date", help="""prints hahr, vailee, yahr in the format
-'Ha-Va-Ya', with vailee as a number""", action="store_true")
-parser.add_argument("-t", "--time", help="""prints gahrtahvo, tahvo, gorahn, prorahn
-in the format 'Ga:Ta:Go:Pr'""", action="store_true")
-parser.add_argument("-p", "--pahrtahvo", help="prints just the pahrtahvo", \
-action="store_true")
-parser.add_argument("-a", "--atrian", help="""prints the current D'ni date in \
-extended format,
-using hahrtee fahrah instead of the full hahr""", action="store_true")
+parser.add_argument("-n", "--nts", help="use the New Transliteration System for vailee", action="store_true")
+parser.add_argument("-d", "--date", help="""prints the date only""", action="store_true")
+parser.add_argument("-t", "--time", help="""prints the time only""", action="store_true")
+parser.add_argument("-p", "--pahrtahvo", help="""use pahrtahvotee instead of gahrtahvotee and tahvotee""", action="store_true")
+parser.add_argument("-a", "--atrian", help="""use hahrtee fahrah instead of the full hahr""", action="store_true")
+
+parser.add_argument("-x", "--indate", nargs="+", type=int, default=[], help="input \
+a Gregorian date to convert [YYYY MM DD HH MM]")
+
 args = parser.parse_args()
 
 # Functions equivalents from Brett Middleton's
@@ -34,10 +31,8 @@ args = parser.parse_args()
 #    int()  -> math.floor()
 #    fix()  -> int()
 
-dniMonthsOTS = ["Leefo","Leebro","Leesahn","Leetahr","Leevot","Leevofo",\
-                "Leevobro","Leevosahn","Leevotahr","Leenovoo"]
-dniMonthsNTS = ["Lífo","Líbro","Lísan","Lítar","Lívot","Lívofo","Lívobro",\
-                "Lívosan","Lívotar","Línovú"]
+dniMonthsOTS = ["Leefo","Leebro","Leesahn","Leetahr","Leevot","Leevofo","Leevobro","Leevosahn","Leevotahr","Leenovoo"]
+dniMonthsNTS = ["Lífo","Líbro","Lísan","Lítar","Lívot","Lívofo","Lívobro","Lívosan","Lívotar","Línovú"]
 
 # Prorahn                          ~ 1.39 seconds
 # Gorahn           25 prorahn     ~ 34.8  seconds
@@ -61,6 +56,9 @@ dniMonthsNTS = ["Lífo","Líbro","Lísan","Lítar","Lívot","Lívofo","Lívobro"
 
 (year, mon, mday, hour, min, sec, wday, yday, isdst) = time.gmtime()
 
+if args.indate:
+    (year, mon, mday, hour, min) = args.indate
+
 # Baseline conversion date (UTC time), equivalent to 9654 Leefo 1, 00:00:00:00
 #(year, mon, mday, hour, min, sec) = (1998, 4, 21, 10, 35, 18)
 
@@ -71,24 +69,24 @@ day1 = mday
 # Adjusting for Mountain Time
 hour1 = hour - 8
 if hour < 8:
-	hour1 = hour1 + 24
-	day1 = mday - 1
+    hour1 = hour1 + 24
+    day1 = mday - 1
 
 # Algorithm 1. Gregorian Date to Julian Day Number
 if month1 < 3:
-	month1 = month1 + 12
-	year1 = year1 - 1
+    month1 = month1 + 12
+    year1 = year1 - 1
 
-WD = day1 + int(((153 * month1) - 457) / 5) + math.floor(365.25 * year1) - \
-     math.floor(0.01 * year1) + math.floor(0.0025 *  year1)
+WD = day1 + int(((153 * month1) - 457) / 5) + math.floor(365.25 * year1) - math.floor(0.01 * year1) + math.floor(0.0025 *  year1)
 FD = ((hour1 * 3600) + (min * 60) + sec) / 86400
-JD = WD + FD;
+JD = WD + FD
 
 # Algorithm 6. Gregorian Date (Julian Day Number) to Cavernian Date
 JDD = JD - 729806.107847222
 AY = JDD * 0.79399371150033 + 1
 
 # Algorithm 4. Atrian Yahr Number to Cavernian Date
+# (Added the pahrtahvo calculation)
 Z = math.floor(AY)
 G = Z - 0.25
 A = math.floor(G / 290)
@@ -114,20 +112,31 @@ atrian = int((WY + FY) / 290)
 
 # Display options for vailee names
 if args.nts:
-	vaileeName = dniMonthsNTS[int(vailee)-1]
+    vaileeName = dniMonthsNTS[int(vailee)-1]
 else:
-	vaileeName = dniMonthsOTS[int(vailee)-1]
+    vaileeName = dniMonthsOTS[int(vailee)-1]
 
 # Time format display
 if args.date:
-	print "%02d-%02d-%02d" % (hahr, int(vailee), yahr)
+    if args.atrian:
+        print("%02d-%02d-%02d" % (atrian, int(vailee), yahr))
+    else:
+        print("%02d-%02d-%02d" % (hahr, int(vailee), yahr))
+
 elif args.time:
-	print "%02d:%02d:%02d:%02d" % (gahrtahvo, tahvo, gorahn, prorahn)
-elif args.pahrtahvo:
-	print "%.1f" % (pahrtahvo)
-elif args.atrian:
-	print "%02d %s %02d, %02d:%02d:%02d:%02d [%.1f]" % (atrian, vaileeName, yahr, \
-	       gahrtahvo, tahvo, gorahn, prorahn, pahrtahvo)
+    if args.pahrtahvo:
+        print("%02d:%02d:%02d" % (pahrtahvo, gorahn, prorahn))
+    else:
+        print("%02d:%02d:%02d:%02d" % (gahrtahvo, tahvo, gorahn, prorahn))
+
 else:
-	print "%02d %s %02d, %02d:%02d:%02d:%02d [%.1f]" % (hahr, vaileeName, yahr, \
-	       gahrtahvo, tahvo, gorahn, prorahn, pahrtahvo)
+    if args.atrian:
+        if args.pahrtahvo:
+            print("%02d %s %02d, %02d:%02d:%02d" % (atrian, vaileeName, yahr, pahrtahvo, gorahn, prorahn))
+        else:
+            print("%02d %s %02d, %02d:%02d:%02d:%02d" % (atrian, vaileeName, yahr, gahrtahvo, tahvo, gorahn, prorahn))
+    else:
+        if args.pahrtahvo:
+            print("%02d %s %02d, %02d:%02d:%02d" % (hahr, vaileeName, yahr, pahrtahvo, gorahn, prorahn))
+        else:
+            print("%02d %s %02d, %02d:%02d:%02d:%02d" % (hahr, vaileeName, yahr, gahrtahvo, tahvo, gorahn, prorahn))
