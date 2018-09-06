@@ -58,6 +58,7 @@ dniMonthsNTS = ["Lífo","Líbro","Lísan","Lítar","Lívot","Lívofo","Lívobro"
 
 if args.indate:
     (year, mon, mday, hour, min) = args.indate
+    sec = 0
 
 # Baseline conversion date (UTC time), equivalent to 9654 Leefo 1, 00:00:00:00
 #(year, mon, mday, hour, min, sec) = (1998, 4, 21, 10, 35, 18)
