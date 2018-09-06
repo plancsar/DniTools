@@ -1,5 +1,5 @@
 # DniTools
-A collection of tools for the D'ni language, created by Richard A. Watson at Cyan Worlds
+A collection of tools for the D'ni language, created by Richard A. Watson at Cyan Inc.
 
 DniTime prints the current D'ni date and time, as described in the Myst Online: Uru Live game.
 
