@@ -101,7 +101,7 @@ gorahn = int(R1 / 25)
 prorahn = int(R1 - (gorahn * 25))
 
 # (Modified) Algorithm 3. Cavernian Date to Atrian Yahr Number
-# Here we use the beginning of the current D'ni century, 9647 DE
+# Here we use the epoch year, 9647 DE
 WY = yahr + ((vailee - 1) * 29) + ((hahr - 9647) * 290)
 FY = ((gahrtahvo * 15625) + (tahvo * 625) + (gorahn * 25) + prorahn) / 78125
 atrian = int(WY + FY)
