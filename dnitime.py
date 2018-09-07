@@ -118,25 +118,24 @@ else:
 # Time format display
 if args.date:
     if args.atrian:
-        print("%02d-%02d-%02d" % (atrian, int(vailee), yahr))
+        print("%d.%d.%d" % (atrian, int(vailee), yahr))
     else:
-        print("%02d-%02d-%02d" % (hahr, int(vailee), yahr))
+        print("%d.%d.%d" % (hahr, int(vailee), yahr))
 
 elif args.time:
     if args.pahrtahvo:
-        print("%02d:%02d:%02d" % (pahrtahvo, gorahn, prorahn))
+        print("%d:%02d:%02d" % (pahrtahvo, gorahn, prorahn))
     else:
-        print("%02d:%02d:%02d:%02d" % (gahrtahvo, tahvo, gorahn, prorahn))
+        print("%d:%02d:%02d:%02d" % (gahrtahvo, tahvo, gorahn, prorahn))
 
 else:
     if args.atrian:
         if args.pahrtahvo:
-            print("%02d %s %02d, %02d:%02d:%02d" % (atrian, vaileeName, yahr, pahrtahvo, gorahn, prorahn))
+            print("%d %s %d, %d:%02d:%02d" % (atrian, vaileeName, yahr, pahrtahvo, gorahn, prorahn))
         else:
-            print("%02d %s %02d, %02d:%02d:%02d:%02d" % (atrian, vaileeName, yahr, gahrtahvo, tahvo, gorahn, prorahn))
+            print("%d %s %d, %d:%02d:%02d:%02d" % (atrian, vaileeName, yahr, gahrtahvo, tahvo, gorahn, prorahn))
     else:
         if args.pahrtahvo:
-            print("%02d %s %02d, %02d:%02d:%02d" % (hahr, vaileeName, yahr, pahrtahvo, gorahn, prorahn))
+            print("%d %s %d, %d:%02d:%02d" % (hahr, vaileeName, yahr, pahrtahvo, gorahn, prorahn))
         else:
-            print("%02d %s %02d, %02d:%02d:%02d:%02d" % (hahr, vaileeName, yahr, gahrtahvo, tahvo, gorahn, prorahn))
-
+            print("%d %s %d, %d:%02d:%02d:%02d" % (hahr, vaileeName, yahr, gahrtahvo, tahvo, gorahn, prorahn))
