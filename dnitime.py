@@ -61,17 +61,12 @@ if args.indate:
     sec = 0
 
 # Baseline conversion date (UTC time), equivalent to 9654 Leefo 1, 00:00:00:00
-#(year, mon, mday, hour, min, sec) = (1998, 4, 21, 10, 35, 18)
+#(year, mon, mday, hour, min, sec) = (1991, 4, 21, 17, 54, 00)
 
 month1 = mon
 year1 = year
 day1 = mday
-
-# Adjusting for Mountain Time
-hour1 = hour - 8
-if hour < 8:
-    hour1 = hour1 + 24
-    day1 = mday - 1
+hour1 = hour
 
 # Algorithm 1. Gregorian Date to Julian Day Number
 if month1 < 3:
@@ -83,8 +78,8 @@ FD = ((hour1 * 3600) + (min * 60) + sec) / 86400
 JD = WD + FD
 
 # Algorithm 6. Gregorian Date (Julian Day Number) to Cavernian Date
-JDD = JD - 729806.107847222
-AY = JDD * 0.79399371150033 + 1
+JDD = JD - 727249.745833333
+AY = JDD * 0.793993705929756 + 1
 
 # Algorithm 4. Atrian Yahr Number to Cavernian Date
 # (Added the pahrtahvo calculation)
@@ -95,7 +90,7 @@ C = Z - (A * 290)
 Z = (AY - math.floor(AY)) * 78125
 vailee = math.floor((C - 0.25) / 29) + 1
 yahr = C - ((vailee - 1) * 29)
-hahr = 9654 + A
+hahr = 9647 + A
 gahrtahvo = int(Z / 15625)
 pt = Z - (gahrtahvo * 15625)
 pahrtahvo = int(Z * 10 / 3125) / 10
@@ -106,10 +101,10 @@ gorahn = int(R1 / 25)
 prorahn = int(R1 - (gorahn * 25))
 
 # (Modified) Algorithm 3. Cavernian Date to Atrian Yahr Number
-# Here we use the beginning of the current D'ni century, 9375 DE
-WY = yahr + ((vailee - 1) * 29) + ((hahr - 9375) * 290)
+# Here we use the beginning of the current D'ni century, 9647 DE
+WY = yahr + ((vailee - 1) * 29) + ((hahr - 9647) * 290)
 FY = ((gahrtahvo * 15625) + (tahvo * 625) + (gorahn * 25) + prorahn) / 78125
-atrian = int((WY + FY) / 290)
+atrian = int(WY + FY)
 
 # Display options for vailee names
 if args.nts:
@@ -141,3 +136,4 @@ else:
             print("%02d %s %02d, %02d:%02d:%02d" % (hahr, vaileeName, yahr, pahrtahvo, gorahn, prorahn))
         else:
             print("%02d %s %02d, %02d:%02d:%02d:%02d" % (hahr, vaileeName, yahr, gahrtahvo, tahvo, gorahn, prorahn))
+
