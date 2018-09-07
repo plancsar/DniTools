@@ -101,10 +101,13 @@ gorahn = int(R1 / 25)
 prorahn = int(R1 - (gorahn * 25))
 
 # (Modified) Algorithm 3. Cavernian Date to Atrian Yahr Number
-# Here we use the epoch year, 9647 DE
-WY = yahr + ((vailee - 1) * 29) + ((hahr - 9647) * 290)
+# We determine the current (positive) D'ni century
+dnicent = 0
+while (hahr - dnicent) >= 625 and hahr > 0:
+    dnicent += 625
+WY = yahr + ((vailee - 1) * 29) + ((hahr - dnicent) * 290)
 FY = ((gahrtahvo * 15625) + (tahvo * 625) + (gorahn * 25) + prorahn) / 78125
-atrian = int(WY + FY)
+atrian = int((int(WY + FY) - 0.25) / 290)
 
 # Display options for vailee names
 if args.nts:
