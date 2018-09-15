@@ -61,7 +61,7 @@ if args.indate:
     sec = 0
 
 # Baseline conversion date (UTC time), equivalent to 9647 Leefo 1, 00:00:00:00
-#(year, mon, mday, hour, min, sec) = (1991, 4, 21, 17, 54, 00)
+#(year, mon, mday, hour, min, sec) = (1991, 4, 21, 16, 54, 00)
 
 month1 = mon
 year1 = year
@@ -78,7 +78,7 @@ FD = ((hour1 * 3600) + (min * 60) + sec) / 86400
 JD = WD + FD
 
 # Algorithm 6. Gregorian Date (Julian Day Number) to Cavernian Date
-JDD = JD - 727249.745833333
+JDD = JD - 727249.704166666
 AY = JDD * 0.793993705929756 + 1
 
 # Algorithm 4. Atrian Yahr Number to Cavernian Date
