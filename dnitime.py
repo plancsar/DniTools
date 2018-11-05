@@ -10,7 +10,7 @@ from argparse import RawTextHelpFormatter
 parser = argparse.ArgumentParser(description="""
 Prints the current D'ni date, as described in the Myst Online: Uru Live game by Cyan, Inc.
 The date is given as Hahr:Vailee:Yahr (default) or Hahrtee_Fahrah:Vailee:Yahr.
-The time is given as Gahrtahvo:Tahvo:Gorahn:Prorahn (default) or Pahrtahvo:Gorahn:Prorahn.
+The time is given as Gahrtahvo:Tahvo:Gorahn:Prorahn (default) or Pahrtahvo:Tahvo:Gorahn:Prorahn.
 Algorithms based on: Middleton B., 2004 - Date Conversion Techniques For the D'ni Scholar (http://home.earthlink.net/~seizuretown/myst/conversion/D%27ni%20Calendar%20Conversion.pdf).
 """, formatter_class=RawTextHelpFormatter)
 
@@ -37,6 +37,7 @@ dniMonthsNTS = ["Lífo","Líbro","Lísan","Lítar","Lívot","Lívofo","Lívobro"
 # Prorahn                          ~ 1.39 seconds
 # Gorahn           25 prorahn     ~ 34.8  seconds
 # Tahvo            25 gorahn      ~ 14.5  minutes
+# Pahrtahvo         5 tahvo        ~ 1.22 hours
 # Gahrtahvo        25 tahvo        ~ 6.05 hours
 # Yahr              5 gahrtahvo    ~ 1.26 days
 # Vailee           29 yahr         ~ 1    month
@@ -91,14 +92,17 @@ Z = (AY - math.floor(AY)) * 78125
 vailee = math.floor((C - 0.25) / 29) + 1
 yahr = C - ((vailee - 1) * 29)
 hahr = 9647 + A
-gahrtahvo = int(Z / 15625)
-pt = Z - (gahrtahvo * 15625)
-pahrtahvo = int(Z * 10 / 3125) / 10
+gahrtahvo = math.floor(Z / 15625)
 R = Z - (gahrtahvo * 15625)
-tahvo = int(R / 625)
-R1 = R - (tahvo * 625)
-gorahn = int(R1 / 25)
-prorahn = int(R1 - (gorahn * 25))
+
+pt = Z / 3125
+pahrtahvo = math.floor(pt)
+tahvoP = math.floor( (pt - pahrtahvo) * 5 )
+
+tahvoG = math.floor(R / 625)
+R1 = R - (tahvoG * 625)
+gorahn = math.floor(R1 / 25)
+prorahn = math.floor(R1 - (gorahn * 25))
 
 # (Modified) Algorithm 3. Cavernian Date to Atrian Yahr Number
 # We determine the current (positive) D'ni century
@@ -106,7 +110,7 @@ dnicent = 0
 while (hahr - dnicent) >= 625 and hahr > 0:
     dnicent += 625
 WY = yahr + ((vailee - 1) * 29) + ((hahr - dnicent) * 290)
-FY = ((gahrtahvo * 15625) + (tahvo * 625) + (gorahn * 25) + prorahn) / 78125
+FY = ((gahrtahvo * 15625) + (tahvoG * 625) + (gorahn * 25) + prorahn) / 78125
 atrian = int((int(WY + FY) - 0.25) / 290)
 
 # Display options for vailee names
@@ -120,22 +124,22 @@ if args.date:
     if args.atrian:
         print("%d.%d.%d" % (atrian, int(vailee), yahr))
     else:
-        print("%d.%d.%d" % (hahr, int(vailee), yahr))
+        print("%d.%d.%d" % (hahr,   int(vailee), yahr))
 
 elif args.time:
     if args.pahrtahvo:
-        print("%d:%02d:%02d" % (pahrtahvo, gorahn, prorahn))
+        print("%d:%02d:%02d:%02d" % (pahrtahvo, tahvoP, gorahn, prorahn))
     else:
-        print("%d:%02d:%02d:%02d" % (gahrtahvo, tahvo, gorahn, prorahn))
+        print("%d:%02d:%02d:%02d" % (gahrtahvo, tahvoG, gorahn, prorahn))
 
 else:
     if args.atrian:
         if args.pahrtahvo:
-            print("%d %s %d, %d:%02d:%02d" % (atrian, vaileeName, yahr, pahrtahvo, gorahn, prorahn))
+            print("%d %s %d, %d:%02d:%02d:%02d" % (atrian, vaileeName, yahr, pahrtahvo, tahvoP, gorahn, prorahn))
         else:
-            print("%d %s %d, %d:%02d:%02d:%02d" % (atrian, vaileeName, yahr, gahrtahvo, tahvo, gorahn, prorahn))
+            print("%d %s %d, %d:%02d:%02d:%02d" % (atrian, vaileeName, yahr, gahrtahvo, tahvoG, gorahn, prorahn))
     else:
         if args.pahrtahvo:
-            print("%d %s %d, %d:%02d:%02d" % (hahr, vaileeName, yahr, pahrtahvo, gorahn, prorahn))
+            print("%d %s %d, %d:%02d:%02d:%02d" % (hahr,   vaileeName, yahr, pahrtahvo, tahvoP, gorahn, prorahn))
         else:
-            print("%d %s %d, %d:%02d:%02d:%02d" % (hahr, vaileeName, yahr, gahrtahvo, tahvo, gorahn, prorahn))
+            print("%d %s %d, %d:%02d:%02d:%02d" % (hahr,   vaileeName, yahr, gahrtahvo, tahvoG, gorahn, prorahn))
