@@ -21,7 +21,7 @@ parser.add_argument("-p", "--pahrtahvo", help="""use pahrtahvotee instead of gah
 parser.add_argument("-a", "--atrian", help="""use hahrtee fahrah instead of the full hahr""", action="store_true")
 
 parser.add_argument("-x", "--indate", nargs="+", type=int, default=[], help="input \
-a Gregorian date to convert [YYYY MM DD HH MM]")
+a Gregorian date to convert [YYYY MM DD HH MM SS]")
 
 args = parser.parse_args()
 
