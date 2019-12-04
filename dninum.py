@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from __future__ import division
@@ -30,6 +30,8 @@ DniFont format:         dninum.py -fn 7181.6    (output: !@6.%00...)
 Alphanumeric format:    dninum.py -an 7181.6    (output: BC6.F00...)
 """, formatter_class=RawTextHelpFormatter)
 
+parser.add_argument("-s", "--nts", help="use NTS spelling.", action="store_true")
+
 format = parser.add_mutually_exclusive_group()
 format.add_argument("-f", "--font", help="use the DniFont format for digits > 9, e.g. !@6.", action="store_true")
 format.add_argument("-a", "--alpha", help="use alphanumeric digits, e.g. BC6", action="store_true")
@@ -58,7 +60,9 @@ dniDigitsSpellOts = ["roon","fah","bree","sehn","tor","vaht","vahgahfah","vahgah
 
 dniDigitsSpellNts = ["rún","fa","brí","sen","tor","vat","vagafa","vagabrí","vagasen","vagator","névú","négafa","négabrí","négasen","négator","híbor","hígafa","hígabrí","hígasen","hígator","riš","rigafa","rigabrí","rigasen","rigator","."]
 
-dniDigitsPowers = ["","see","rah","lahn","mel","blo"]
+dniDigitsPowersOts = ["","see","rah","lahn","mel","blo"]
+
+dniDigitsPowersNts = ["","sí","ra","lan","mel","blo"]
 
 
 def dec2dni(dec):
@@ -124,27 +128,31 @@ if args.dec:
 
     if spell_count < 7:
         for i in range(2,spell_count+2):
-            if dniDigitsSpellOts[result_dec[-i]] != "roon":
-                spell_text.append(dniDigitsSpellOts[result_dec[-i]] + dniDigitsPowers[i-2] + " ")
+            if args.nts:
+                if dniDigitsSpellNts[result_dec[-i]] != "rún":
+                    spell_text.append(dniDigitsSpellNts[result_dec[-i]] + dniDigitsPowersNts[i-2] + " ")
+            else:
+                if dniDigitsSpellOts[result_dec[-i]] != "roon":
+                    spell_text.append(dniDigitsSpellOts[result_dec[-i]] + dniDigitsPowersOts[i-2] + " ")
 
         spell_str = "".join(map(str,spell_text[::-1]))
-        spell_str = spell_str.replace("rrah", "rah")
+        spell_str = spell_str.replace("rra", "ra")
         print(spell_str)
 
 
 elif args.dni:
     input = []
     if args.font:
-        print("This option is bugged, even if you get a result it will likely be wrong!")
+        print("This option is bugged, even if you do get a result it could be wrong!")
         for i in range(0,len(args.dni)):
             input.append(dniFontDigitsDni[args.dni[i]])
         result = dni2dec(input)
-        print "base10: %f" % (result)
+        print("base10: %f" % (result))
     elif args.alpha:
         for i in range(0,len(args.dni)):
             input.append(dniAlphaDigitsDni[args.dni[i].upper()])
         result = dni2dec(input)
-        print "base10: %f" % (result)
+        print("base10: %f" % (result))
     else:
         for i in range(0,len(args.dni)):
             if args.dni[i] == ".":
@@ -152,5 +160,4 @@ elif args.dni:
             elif int(args.dni[i]) > 24:
                 sys.exit("At least one digit is too big!")
         result = dni2dec(map(float,args.dni))
-        print "base10: %f" % (result)
-
+        print("base10: %f" % (result))
