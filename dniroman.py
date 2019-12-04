@@ -1,5 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+from __future__ import print_function
 
 import argparse
 from argparse import RawTextHelpFormatter
@@ -815,11 +817,11 @@ if args.nts:
     rts = ots2rts(ots)
     dfont = nts2dfont(nts.lower())
     ucsur = dfont2ucsur(dfont)
-    print "\nOTS:     ", ots.encode('utf-8')
-    print "\nDnifont: ", dfont.encode('utf-8')
-    print "\nLTS:     ", lts.encode('utf-8')
-    print "\nRTS:     ", rts.encode('utf-8')
-    print "\nUCSUR:   ", ucsur.encode('utf-8')
+    print("\nOTS:     ", ots.encode('utf-8'))
+    print("\nDnifont: ", dfont.encode('utf-8'))
+    print("\nLTS:     ", lts.encode('utf-8'))
+    print("\nRTS:     ", rts.encode('utf-8'))
+    print("\nUCSUR:   ", ucsur.encode('utf-8'))
 
 elif args.dfont:
     dfont = args.phrase.decode('utf-8')
@@ -828,11 +830,11 @@ elif args.dfont:
     lts = nts2lts(nts)
     rts = ots2rts(ots)
     ucsur = dfont2ucsur(dfont)
-    print "\nOTS:   ", ots.encode('utf-8')
-    print "\nNTS:   ", nts.encode('utf-8')
-    print "\nLTS:   ", lts.encode('utf-8')
-    print "\nRTS:   ", rts.encode('utf-8')
-    print "\nUCSUR: ", ucsur.encode('utf-8')
+    print("\nOTS:   ", ots.encode('utf-8'))
+    print("\nNTS:   ", nts.encode('utf-8'))
+    print("\nLTS:   ", lts.encode('utf-8'))
+    print("\nRTS:   ", rts.encode('utf-8'))
+    print("\nUCSUR: ", ucsur.encode('utf-8'))
 
 elif args.lts:
     lts = args.phrase.decode('utf-8')
@@ -841,11 +843,11 @@ elif args.lts:
     rts = ots2rts(ots)
     dfont = nts2dfont(nts.lower())
     ucsur = dfont2ucsur(dfont)
-    print "\nOTS:     ", ots.encode('utf-8')
-    print "\nNTS:     ", nts.encode('utf-8')
-    print "\nDnifont: ", dfont.encode('utf-8')
-    print "\nRTS:     ", rts.encode('utf-8')
-    print "\nUCSUR:   ", ucsur.encode('utf-8')
+    print("\nOTS:     ", ots.encode('utf-8'))
+    print("\nNTS:     ", nts.encode('utf-8'))
+    print("\nDnifont: ", dfont.encode('utf-8'))
+    print("\nRTS:     ", rts.encode('utf-8'))
+    print("\nUCSUR:   ", ucsur.encode('utf-8'))
 
 elif args.rts:
     rts = args.phrase.decode('utf-8')
@@ -854,11 +856,11 @@ elif args.rts:
     lts = nts2lts(nts)
     dfont = nts2dfont(nts.lower())
     ucsur = dfont2ucsur(dfont)
-    print "\nOTS:     ", ots.encode('utf-8')
-    print "\nNTS:     ", nts.encode('utf-8')
-    print "\nDnifont: ", dfont.encode('utf-8')
-    print "\nLTS:     ", lts.encode('utf-8')
-    print "\nUCSUR:   ", ucsur.encode('utf-8')
+    print("\nOTS:     ", ots.encode('utf-8'))
+    print("\nNTS:     ", nts.encode('utf-8'))
+    print("\nDnifont: ", dfont.encode('utf-8'))
+    print("\nLTS:     ", lts.encode('utf-8'))
+    print("\nUCSUR:   ", ucsur.encode('utf-8'))
 
 elif args.ucsur:
     ucsur = args.phrase.decode('utf-8')
@@ -867,32 +869,33 @@ elif args.ucsur:
     ots = nts2ots(nts)
     lts = nts2lts(nts)
     rts = ots2rts(ots)
-    print "\nOTS:     ", ots.encode('utf-8')
-    print "\nNTS:     ", nts.encode('utf-8')
-    print "\nDnifont: ", dfont.encode('utf-8')
-    print "\nLTS:     ", lts.encode('utf-8')
-    print "\nRTS:     ", rts.encode('utf-8')
+    print("\nOTS:     ", ots.encode('utf-8'))
+    print("\nNTS:     ", nts.encode('utf-8'))
+    print("\nDnifont: ", dfont.encode('utf-8'))
+    print("\nLTS:     ", lts.encode('utf-8'))
+    print("\nRTS:     ", rts.encode('utf-8'))
     
 elif args.brack:
     brack = args.phrase.decode('utf-8')
     alpha = brack2alpha(brack)
     nfont = alpha2dfont(alpha)
-    print "\nDnifont: ", nfont.encode('utf-8')
-    print "\nAlpha:   ", alpha.encode('utf-8')
+    print("\nDnifont: ", nfont.encode('utf-8'))
+    print("\nAlpha:   ", alpha.encode('utf-8'))
 
 elif args.nfont:
     nfont = args.phrase.decode('utf-8')
     alpha = dfont2alpha(nfont)
     brack = alpha2brack(alpha)
-    print "\nBrackets: ", brack.encode('utf-8')
-    print "\nAlpha:    ", alpha.encode('utf-8')
+    print("\nBrackets: ", brack.encode('utf-8'))
+    print("\nAlpha:    ", alpha.encode('utf-8'))
 
 elif args.alpha:
     alpha = args.phrase.decode('utf-8')
     brack = alpha2brack(alpha.upper())
     nfont = alpha2dfont(alpha.upper())
-    print "\nDnifont:  ", nfont.encode('utf-8')
-    print "\nBrackets: ", brack.encode('utf-8')
+    print("\nDnifont:  ", nfont.encode('utf-8'))
+    print("\nBrackets: ", brack.encode('utf-8'))
+
 else:
     ots = args.phrase.decode('utf-8')
     nts = ots2nts(ots)
@@ -900,8 +903,8 @@ else:
     lts = nts2lts(nts)
     rts = ots2rts(ots)
     ucsur = dfont2ucsur(dfont)
-    print "\nDnifont: ", dfont.encode('utf-8')
-    print "\nNTS:     ", nts.encode('utf-8')
-    print "\nLTS:     ", lts.encode('utf-8')
-    print "\nRTS:     ", rts.encode('utf-8')
-    print "\nUCSUR:   ", ucsur.encode('utf-8')
+    print("\nDnifont: ", dfont.encode('utf-8'))
+    print("\nNTS:     ", nts.encode('utf-8'))
+    print("\nLTS:     ", lts.encode('utf-8'))
+    print("\nRTS:     ", rts.encode('utf-8'))
+    print("\nUCSUR:   ", ucsur.encode('utf-8'))
