@@ -34,6 +34,8 @@ args = parser.parse_args()
 dniMonthsOTS = ["Leefo","Leebro","Leesahn","Leetahr","Leevot","Leevofo","Leevobro","Leevosahn","Leevotahr","Leenovoo"]
 dniMonthsNTS = ["Lífo","Líbro","Lísan","Lítar","Lívot","Lívofo","Lívobro","Lívosan","Lívotar","Línovú"]
 
+leapSecs = { 1972: -16, 1973: -14, 1974: -13, 1975: -12, 1976: -11, 1977: -10, 1978: -9, 1979: -8, 1980: -7, 1981: -7, 1982: -6, 1983: -5, 1984: -4, 1985: -4, 1986: -3, 1987: -3, 1988: -2, 1989: -2, 1990: -1, 1991: 0, 1992: 1, 1993: 2, 1994: 3, 1995: 4, 1996: 4, 1997: 5, 1998: 6, 1999: 6, 2000: 6, 2001: 6, 2002: 6, 2003: 6, 2004: 6, 2005: 7, 2006: 7, 2007: 7, 2008: 8, 2009: 8, 2010: 8, 2011: 8, 2012: 9, 2013: 9, 2014: 9, 2015: 10, 2016: 11, 2017: 11, 2018: 11, 2019: 11, 2020: 11 }
+
 # Prorahn                          ~ 1.39 seconds
 # Gorahn           25 prorahn     ~ 34.8  seconds
 # Tahvo            25 gorahn      ~ 14.5  minutes
@@ -68,6 +70,14 @@ month1 = mon
 year1 = year
 day1 = mday
 hour1 = hour
+
+# Checking for leap seconds
+if year1 < 1972:
+    sec = sec - 16
+elif year1 > 2020:
+    sec = sec + 11
+else:
+    sec = sec + leapSecs[year1]
 
 # Algorithm 1. Gregorian Date to Julian Day Number
 if month1 < 3:
