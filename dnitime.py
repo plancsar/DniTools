@@ -145,11 +145,11 @@ elif args.time:
 else:
     if args.atrian:
         if args.pahrtahvo:
-            print("%d %s %d, %d:%02d:%02d:%02d" % (atrian, vaileeName, yahr, pahrtahvo, tahvoP, gorahn, prorahn))
+            print("%d %s %d, %d:%d:%02d:%02d" % (atrian, vaileeName, yahr, pahrtahvo, tahvoP, gorahn, prorahn))
         else:
             print("%d %s %d, %d:%02d:%02d:%02d" % (atrian, vaileeName, yahr, gahrtahvo, tahvoG, gorahn, prorahn))
     else:
         if args.pahrtahvo:
-            print("%d %s %d, %d:%02d:%02d:%02d" % (hahr,   vaileeName, yahr, pahrtahvo, tahvoP, gorahn, prorahn))
+            print("%d %s %d, %d:%d:%02d:%02d" % (hahr,   vaileeName, yahr, pahrtahvo, tahvoP, gorahn, prorahn))
         else:
             print("%d %s %d, %d:%02d:%02d:%02d" % (hahr,   vaileeName, yahr, gahrtahvo, tahvoG, gorahn, prorahn))
