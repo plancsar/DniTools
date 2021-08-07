@@ -8,7 +8,7 @@ from pytz import timezone
 from tzlocal import get_localzone
 
 parser = argparse.ArgumentParser(description="""
-Prints the next four Eder Gira sunsets and sunrises, in KI time.
+Prints the next four Pod portal openings and Eder Gira sunrises/sunsets.
 """, formatter_class=RawTextHelpFormatter)
 
 parser.add_argument("-l", "--local", help="print the dates in your local time", action="store_true")
