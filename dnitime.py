@@ -17,6 +17,7 @@ Algorithms based on: Middleton B., 2004 - Date Conversion Techniques For the D'n
 parser.add_argument("-n", "--nts", help="use the New Transliteration System for vailee", action="store_true")
 parser.add_argument("-d", "--date", help="""prints the date only""", action="store_true")
 parser.add_argument("-t", "--time", help="""prints the time only""", action="store_true")
+parser.add_argument("-c", "--clock", help="""prints the time only, in decimal format""", action="store_true")
 parser.add_argument("-p", "--pahrtahvo", help="""use pahrtahvotee instead of gahrtahvotee and tahvotee""", action="store_true")
 parser.add_argument("-a", "--atrian", help="""use hahrtee fahrah instead of the full hahr""", action="store_true")
 
@@ -141,6 +142,14 @@ elif args.time:
         print("%d:%02d:%02d:%02d" % (pahrtahvo, tahvoP, gorahn, prorahn))
     else:
         print("%d:%02d:%02d:%02d" % (gahrtahvo, tahvoG, gorahn, prorahn))
+
+elif args.clock:
+    if args.pahrtahvo:
+        pahrtahvo = pahrtahvo + tahvoP/5 + gorahn/125 + prorahn/3125
+        print("%.4f" % (pahrtahvo))
+    else:
+        gahrtahvo = gahrtahvo + tahvoG/25 + gorahn/625 + prorahn/15625
+        print("%.4f" % (gahrtahvo))
 
 else:
     if args.atrian:
