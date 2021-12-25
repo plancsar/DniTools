@@ -27,9 +27,6 @@ for ts in tstamps:
         portal += timedelta(hours=15.718056)
         if portal > datetime.now(timezone('UTC')):
             break
-            
-    if ts != 946730009:
-        portal -= timedelta(hours=15.718056)
 
     portal += timedelta(hours=2, minutes=-14, seconds=16)
 
@@ -78,9 +75,9 @@ else:
 sunset = sunrise + timedelta(hours=5, minutes=48)
 
 if sunrise < datetime.now(timezone('UTC')):
-    phase = "day"
-else:
     phase = "night"
+else:
+    phase = "day"
 
 if args.local:
     sunset1 = sunset.astimezone(get_localzone())
