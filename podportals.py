@@ -12,6 +12,7 @@ Prints the next four Pod portal openings and Eder Gira sunrises/sunsets.
 """, formatter_class=RawTextHelpFormatter)
 
 parser.add_argument("-l", "--local", help="print the dates in your local time", action="store_true")
+parser.add_argument("-t", "--table", help="print the dates as a CSV", action="store_true")
 args = parser.parse_args()
 
 #          Negilahn   Dereno     Payiferen  Tetsonot
@@ -47,15 +48,31 @@ for ts in tstamps:
     pdtimes.append( str(format(portal1.month, "02d")) +"/"+ str(format(portal4.day, "02d")) +" "+ str(format(portal4.hour, "02d")) +":"+ str(format(portal4.minute, "02d")) )
 
 
-print("Actual portal times may be a few minutes early or late.\n\nNegilahn ↑\tDereno ↓   \tPayiferen ↓\tTetsonot ↑")
+if args.table:
+    if args.local:
+        print("# Times are in your local time.")
+    else:
+        print("# Times are in KI time.")
 
-for x in range(0, 4):
-    print("%s\t%s\t%s\t%s" % ( pdtimes[x], pdtimes[x+4], pdtimes[x+8], pdtimes[x+12] ) )
+    print("# Actual portal times may be a few minutes early or late.")
+
+    for x in range(0, 4):
+        print("%s,Negilahn\n%s,Dereno\n%s,Payiferen\n%s,Tetsonot" % ( pdtimes[x], pdtimes[x+4], pdtimes[x+8], pdtimes[x+12] ) )
+
+else:
+    if args.local:
+        print("\nTimes are in your local time.")
+    else:
+        print("\nTimes are in KI time.")
+
+    print("Actual portal times may be a few minutes early or late.\n\nNegilahn ↑\tDereno ↓   \tPayiferen ↓\tTetsonot ↑")
+
+    for x in range(0, 4):
+        print("%s\t%s\t%s\t%s" % ( pdtimes[x], pdtimes[x+4], pdtimes[x+8], pdtimes[x+12] ) )
 
 
 # Timestamp: 2000-01-01T08:00:00Z
 startdate = datetime.fromtimestamp(946713600, tz=timezone('UTC') )
-
 
 sunrise = startdate
 
@@ -75,29 +92,37 @@ else:
 sunset = sunrise + timedelta(hours=5, minutes=48)
 
 if sunrise < datetime.now(timezone('UTC')):
-    phase = "night"
-else:
     phase = "day"
+else:
+    phase = "night"
 
 if args.local:
     sunset1 = sunset.astimezone(get_localzone())
 else:
     sunset1 = sunset.astimezone(timezone('America/Denver'))
 
+if args.table:
+    print("\n# It's %s in Eder Gira now" % phase)
+    print("%02d/%02d %02d:%02d,Sunrise\n%02d/%02d %02d:%02d,Sunset" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
+    sunrise1 += timedelta(hours=10)
+    sunset1  += timedelta(hours=10)
+    print("%02d/%02d %02d:%02d,Sunrise\n%02d/%02d %02d:%02d,Sunset" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
+    sunrise1 += timedelta(hours=10)
+    sunset1  += timedelta(hours=10)
+    print("%02d/%02d %02d:%02d,Sunrise\n%02d/%02d %02d:%02d,Sunset" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
+    sunrise1 += timedelta(hours=10)
+    sunset1  += timedelta(hours=10)
+    print("%02d/%02d %02d:%02d,Sunrise\n%02d/%02d %02d:%02d,Sunset" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
 
-print("\nEder Gira (it's %s now)\nSunrises\tSunsets" % phase)
-print("%02d/%02d %02d:%02d\t%02d/%02d %02d:%02d" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
-sunrise1 += timedelta(hours=10)
-sunset1  += timedelta(hours=10)
-print("%02d/%02d %02d:%02d\t%02d/%02d %02d:%02d" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
-sunrise1 += timedelta(hours=10)
-sunset1  += timedelta(hours=10)
-print("%02d/%02d %02d:%02d\t%02d/%02d %02d:%02d" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
-sunrise1 += timedelta(hours=10)
-sunset1  += timedelta(hours=10)
-print("%02d/%02d %02d:%02d\t%02d/%02d %02d:%02d" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
-
-if args.local:
-    print("\nTimes are in your local time.")
 else:
-    print("\nTimes are in KI time.")
+    print("\nEder Gira (it's %s now)\nSunrises\tSunsets" % phase)
+    print("%02d/%02d %02d:%02d\t%02d/%02d %02d:%02d" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
+    sunrise1 += timedelta(hours=10)
+    sunset1  += timedelta(hours=10)
+    print("%02d/%02d %02d:%02d\t%02d/%02d %02d:%02d" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
+    sunrise1 += timedelta(hours=10)
+    sunset1  += timedelta(hours=10)
+    print("%02d/%02d %02d:%02d\t%02d/%02d %02d:%02d" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
+    sunrise1 += timedelta(hours=10)
+    sunset1  += timedelta(hours=10)
+    print("%02d/%02d %02d:%02d\t%02d/%02d %02d:%02d\n" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
