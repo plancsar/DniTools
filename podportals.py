@@ -42,10 +42,10 @@ for ts in tstamps:
     pdtimes.append( str(format(portal2.month, "02d")) +"/"+ str(format(portal2.day, "02d")) +" "+ str(format(portal2.hour, "02d")) +":"+ str(format(portal2.minute, "02d")) )
     
     portal3 = portal2 + timedelta(hours=15.718056)
-    pdtimes.append( str(format(portal1.month, "02d")) +"/"+ str(format(portal3.day, "02d")) +" "+ str(format(portal3.hour, "02d")) +":"+ str(format(portal3.minute, "02d")) )
+    pdtimes.append( str(format(portal3.month, "02d")) +"/"+ str(format(portal3.day, "02d")) +" "+ str(format(portal3.hour, "02d")) +":"+ str(format(portal3.minute, "02d")) )
     
     portal4 = portal3 + timedelta(hours=15.718056)
-    pdtimes.append( str(format(portal1.month, "02d")) +"/"+ str(format(portal4.day, "02d")) +" "+ str(format(portal4.hour, "02d")) +":"+ str(format(portal4.minute, "02d")) )
+    pdtimes.append( str(format(portal4.month, "02d")) +"/"+ str(format(portal4.day, "02d")) +" "+ str(format(portal4.hour, "02d")) +":"+ str(format(portal4.minute, "02d")) )
 
 
 if args.table:
