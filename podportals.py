@@ -21,7 +21,6 @@ pdtimes = []
 
 for ts in tstamps:
     startdate = datetime.fromtimestamp(ts, tz=timezone('UTC') )
-
     portal = startdate
 
     while True:
@@ -71,9 +70,9 @@ else:
         print("%s\t%s\t%s\t%s" % ( pdtimes[x], pdtimes[x+4], pdtimes[x+8], pdtimes[x+12] ) )
 
 
+
 # Timestamp: 2000-01-01T08:00:00Z
 startdate = datetime.fromtimestamp(946713600, tz=timezone('UTC') )
-
 sunrise = startdate
 
 while True:
@@ -81,8 +80,7 @@ while True:
     if sunrise > datetime.now(timezone('UTC')):
         break
 
-sunrise -= timedelta(hours=15.718056)
-sunrise += timedelta(hours=6, minutes=6)
+sunrise -= timedelta(hours=9, minutes=38)
 
 if args.local:
     sunrise1 = sunrise.astimezone(get_localzone())
@@ -91,15 +89,15 @@ else:
 
 sunset = sunrise + timedelta(hours=5, minutes=48)
 
-if sunrise < datetime.now(timezone('UTC')):
-    phase = "day"
-else:
-    phase = "night"
-
 if args.local:
     sunset1 = sunset.astimezone(get_localzone())
 else:
     sunset1 = sunset.astimezone(timezone('America/Denver'))
+
+if sunset > datetime.now(timezone('UTC')):
+    phase = "day"
+else:
+    phase = "night"
 
 if args.table:
     print("\n# It's %s in Eder Gira now" % phase)
@@ -125,4 +123,60 @@ else:
     print("%02d/%02d %02d:%02d\t%02d/%02d %02d:%02d" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
     sunrise1 += timedelta(hours=10)
     sunset1  += timedelta(hours=10)
+    print("%02d/%02d %02d:%02d\t%02d/%02d %02d:%02d\n" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
+
+
+
+# Timestamp: 2000-01-01T08:00:00Z
+startdate = datetime.fromtimestamp(672211080, tz=timezone('UTC') )
+sunrise = startdate
+
+while True:
+    sunrise += timedelta(hours=15.777800)
+    if sunrise > datetime.now(timezone('UTC')):
+        break
+
+sunrise -= timedelta(hours=29, minutes=52)
+
+if args.local:
+    sunrise1 = sunrise.astimezone(get_localzone())
+else:
+    sunrise1 = sunrise.astimezone(timezone('America/Denver'))
+
+sunset = sunrise + timedelta(hours=7, minutes=53)
+
+if args.local:
+    sunset1 = sunset.astimezone(get_localzone())
+else:
+    sunset1 = sunset.astimezone(timezone('America/Denver'))
+
+if sunset > datetime.now(timezone('UTC')):
+    phase = "day"
+else:
+    phase = "night"
+
+if args.table:
+    print("\n# It's %s in Eder Naybree now" % phase)
+    print("%02d/%02d %02d:%02d,Sunrise\n%02d/%02d %02d:%02d,Sunset" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
+    sunrise1 += timedelta(hours=15.777800)
+    sunset1  += timedelta(hours=15.777800)
+    print("%02d/%02d %02d:%02d,Sunrise\n%02d/%02d %02d:%02d,Sunset" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
+    sunrise1 += timedelta(hours=15.777800)
+    sunset1  += timedelta(hours=15.777800)
+    print("%02d/%02d %02d:%02d,Sunrise\n%02d/%02d %02d:%02d,Sunset" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
+    sunrise1 += timedelta(hours=15.777800)
+    sunset1  += timedelta(hours=15.777800)
+    print("%02d/%02d %02d:%02d,Sunrise\n%02d/%02d %02d:%02d,Sunset" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
+
+else:
+    print("\nEder Naybree (it's %s now)\nSunrises\tSunsets" % phase)
+    print("%02d/%02d %02d:%02d\t%02d/%02d %02d:%02d" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
+    sunrise1 += timedelta(hours=15.777800)
+    sunset1  += timedelta(hours=15.777800)
+    print("%02d/%02d %02d:%02d\t%02d/%02d %02d:%02d" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
+    sunrise1 += timedelta(hours=15.777800)
+    sunset1  += timedelta(hours=15.777800)
+    print("%02d/%02d %02d:%02d\t%02d/%02d %02d:%02d" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
+    sunrise1 += timedelta(hours=15.777800)
+    sunset1  += timedelta(hours=15.777800)
     print("%02d/%02d %02d:%02d\t%02d/%02d %02d:%02d\n" % (sunrise1.month, sunrise1.day, sunrise1.hour, sunrise1.minute, sunset1.month, sunset1.day, sunset1.hour, sunset1.minute))
