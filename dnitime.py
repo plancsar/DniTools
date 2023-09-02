@@ -10,7 +10,7 @@ from argparse import RawTextHelpFormatter
 parser = argparse.ArgumentParser(description="""
 Prints the current D'ni date, as described in the Myst Online: Uru Live game by Cyan, Inc.
 The date is given as Hahr:Vailee:Yahr (default) or Hahrtee_Fahrah:Vailee:Yahr.
-The time is given as Gahrtahvo:Tahvo:Gorahn:Prorahn (default) or Pahrtahvo:Tahvo:Gorahn:Prorahn.
+The time is given as Pahrtahvo:Tahvo:Gorahn:Prorahn (default) or Gahrtahvo:Tahvo:Gorahn:Prorahn.
 Algorithms based on: Middleton B., 2004 - Date Conversion Techniques For the D'ni Scholar (http://home.earthlink.net/~seizuretown/myst/conversion/D%27ni%20Calendar%20Conversion.pdf).
 """, formatter_class=RawTextHelpFormatter)
 
@@ -18,7 +18,7 @@ parser.add_argument("-n", "--nts", help="use the New Transliteration System for 
 parser.add_argument("-d", "--date", help="""prints the date only""", action="store_true")
 parser.add_argument("-t", "--time", help="""prints the time only""", action="store_true")
 parser.add_argument("-c", "--clock", help="""prints the time only, in decimal format""", action="store_true")
-parser.add_argument("-p", "--pahrtahvo", help="""use pahrtahvotee instead of gahrtahvotee and tahvotee""", action="store_true")
+parser.add_argument("-g", "--gahrtahvo", help="""use gahrtahvotee instead of pahrtahvotee""", action="store_true")
 parser.add_argument("-a", "--atrian", help="""use hahrtee fahrah instead of the full hahr""", action="store_true")
 
 parser.add_argument("-x", "--indate", nargs="+", type=int, default=[], help="input \
@@ -135,30 +135,30 @@ if args.date:
     if args.atrian:
         print("%d.%d.%d" % (atrian, int(vailee), yahr))
     else:
-        print("%d.%d.%d" % (hahr,   int(vailee), yahr))
+        print("%d.%d.%d" % (hahr, int(vailee), yahr))
 
 elif args.time:
-    if args.pahrtahvo:
-        print("%d:%02d:%02d:%02d" % (pahrtahvo, tahvoP, gorahn, prorahn))
-    else:
+    if args.gahrtahvo:
         print("%d:%02d:%02d:%02d" % (gahrtahvo, tahvoG, gorahn, prorahn))
+    else:
+        print("%d:%02d:%02d:%02d" % (pahrtahvo, tahvoP, gorahn, prorahn))
 
 elif args.clock:
-    if args.pahrtahvo:
-        pahrtahvo = pahrtahvo + tahvoP/5 + gorahn/125 + prorahn/3125
-        print("%.4f" % (pahrtahvo))
-    else:
+    if args.gahrtahvo:
         gahrtahvo = gahrtahvo + tahvoG/25 + gorahn/625 + prorahn/15625
         print("%.4f" % (gahrtahvo))
+    else:
+        pahrtahvo = pahrtahvo + tahvoP/5 + gorahn/125 + prorahn/3125
+        print("%.4f" % (pahrtahvo))
 
 else:
     if args.atrian:
-        if args.pahrtahvo:
-            print("%d %s %d, %d:%d:%02d:%02d" % (atrian, vaileeName, yahr, pahrtahvo, tahvoP, gorahn, prorahn))
-        else:
+        if args.gahrtahvo:
             print("%d %s %d, %d:%02d:%02d:%02d" % (atrian, vaileeName, yahr, gahrtahvo, tahvoG, gorahn, prorahn))
-    else:
-        if args.pahrtahvo:
-            print("%d %s %d, %d:%d:%02d:%02d" % (hahr,   vaileeName, yahr, pahrtahvo, tahvoP, gorahn, prorahn))
         else:
-            print("%d %s %d, %d:%02d:%02d:%02d" % (hahr,   vaileeName, yahr, gahrtahvo, tahvoG, gorahn, prorahn))
+            print("%d %s %d, %d:%d:%02d:%02d" % (atrian, vaileeName, yahr, pahrtahvo, tahvoP, gorahn, prorahn))
+    else:
+        if args.gahrtahvo:
+            print("%d %s %d, %d:%02d:%02d:%02d" % (hahr, vaileeName, yahr, gahrtahvo, tahvoG, gorahn, prorahn))
+        else:
+            print("%d %s %d, %d:%d:%02d:%02d" % (hahr, vaileeName, yahr, pahrtahvo, tahvoP, gorahn, prorahn))
