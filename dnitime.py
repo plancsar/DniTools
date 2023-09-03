@@ -20,9 +20,8 @@ parser.add_argument("-t", "--time", help="""prints the time only""", action="sto
 parser.add_argument("-c", "--clock", help="""prints the time only, in decimal format""", action="store_true")
 parser.add_argument("-g", "--gahrtahvo", help="""use gahrtahvotee instead of pahrtahvotee""", action="store_true")
 parser.add_argument("-a", "--atrian", help="""use hahrtee fahrah instead of the full hahr""", action="store_true")
-
-parser.add_argument("-x", "--indate", nargs="+", type=int, default=[], help="input \
-a Gregorian date to convert [YYYY MM DD HH MM SS]")
+parser.add_argument("-x", "--indate", nargs="+", type=int, default=[], help="input a Gregorian date to convert [YYYY MM DD HH MM SS]")
+parser.add_argument("-q", "--agm", help="print in AGM script format", action="store_true")
 
 args = parser.parse_args()
 
@@ -61,8 +60,7 @@ leapSecs = { 1972: -16, 1973: -14, 1974: -13, 1975: -12, 1976: -11, 1977: -10, 1
 (year, mon, mday, hour, min, sec, wday, yday, isdst) = time.gmtime()
 
 if args.indate:
-    (year, mon, mday, hour, min) = args.indate
-    sec = 0
+    (year, mon, mday, hour, min, sec) = args.indate
 
 # Baseline conversion date (UTC time), equivalent to 9647 Leefo 1, 00:00:00:00
 #(year, mon, mday, hour, min, sec) = (1991, 4, 21, 16, 54, 00)
@@ -131,6 +129,9 @@ else:
     vaileeName = dniMonthsOTS[int(vailee)-1]
 
 # Time format display
+if args.agm:
+    print("%s %d, %d, and the time is %d:%02d:%02d" % (vaileeName, yahr, hahr, pahrtahvo, tahvoP, gorahn))
+
 if args.date:
     if args.atrian:
         print("%d.%d.%d" % (atrian, int(vailee), yahr))
