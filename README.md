@@ -1,20 +1,20 @@
 # DniTools
-A collection of tools for the D'ni language created by Richard A. Watson at Cyan Inc.
+A collection of tools for the D’ni language, created by Richard A. Watson at Cyan Inc.
 
-**agm_dates.sh** prints a list of D'ni dates for the All Guild Meetings for the current (or a given) year, to be used by the AGM moderator.
+**dnitime.py**: prints the current D’ni date and time, as described in the Myst Online: Uru Live game.
 
-**convdnidate.py** converts a D'ni date and time to the Gregorian calendar.
+**agm_dates.sh**: prints a list of D’ni dates for the All Guild Meetings for the current (or a given) year, to be used by the AGM moderator. Requires *dnitime.py*.
 
-**dninum.py** converts numbers between base 10 and 25, with various formats (Dnifont, Alphanumeric, Brackets).
+**convdnidate.py**: converts a D’ni date and time to the Gregorian calendar.
 
-**dniroman.py** converts a line of text in D'ni to and from various transliterations.
+**dninum.py**: converts numbers between base 10 and 25, with various formats (Dnifont, Alphanumeric, Brackets).
 
-**dnisort.py** sorts a csv database of D'ni words (or any wordlist for that matter) in D'ni alphabetical order, using NTS or Dnifont encoding (OTS is too irregular to sort properly).
+**dniroman.py**: converts a line of text in D’ni to and from various transliterations.
 
-**dnitime.py** prints the current D'ni date and time, as described in the Myst Online: Uru Live game.
+**podportals.py**: a predictor for the Pod ages and for Eder Gira sunrise/sunset.
 
-**dnitransl.py** is a (bad) attempt at a rough D'ni-to-English automated translator.
+**dnisort.py**: sorts a csv database of D’ni words (or any wordlist for that matter) in D’ni alphabetical order, using NTS or Dnifont encoding (OTS is too irregular to sort properly).
 
-**fortunes-dni** is a database of D'ni-related quotes to be used with [fortune](https://wiki.archlinux.org/title/Fortune#Creating_custom_files).
+**fortunes-dni**: a database of D’ni-related quotes to be used with [fortune](https://wiki.archlinux.org/title/Fortune#Creating_custom_files).
 
-**podportals.py** is a predictor for the Pod ages and for Eder Gira sunrise/sunset.f
+**dnitransl.py**: a (***bad***) attempt at a rough D’ni-to-English automated translator.
