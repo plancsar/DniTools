@@ -11,7 +11,7 @@ A collection of tools for the [D’ni language](https://archive.guildofarchivist
 
 **dniroman.py**: converts a line of text in D’ni to and from various [transliterations](https://archive.guildofarchivists.org/wiki/D%27ni_(language)#Transliteration).
 
-**podportals.py**: a predictor for the [Pod Ages](https://archive.guildofarchivists.org/wiki/Pod_Age) for [Eder Gira](https://archive.guildofarchivists.org/wiki/Eder_Gira) and for [Eder Naybree](https://archive.guildofarchivists.org/wiki/Eder_Naybree) sunrise/sunset.
+**podportals.py**: a predictor for the [Pod Ages](https://archive.guildofarchivists.org/wiki/Pod_Age), for [Eder Gira](https://archive.guildofarchivists.org/wiki/Eder_Gira) and for [Eder Naybree](https://archive.guildofarchivists.org/wiki/Eder_Naybree) sunrise/sunset.
 
 **dnisort.py**: sorts a csv database of D’ni words (or any wordlist for that matter) in D’ni alphabetical order, using NTS or Dnifont encoding (OTS is too irregular to sort properly).
 
