@@ -15,15 +15,15 @@ The time is given as Pahrtahvo:Tahvo:Gorahn:Prorahn (default) or Gahrtahvo:Tahvo
 Algorithms based on: Middleton B., 2004 - Date Conversion Techniques For the D'ni Scholar (http://home.earthlink.net/~seizuretown/myst/conversion/D%27ni%20Calendar%20Conversion.pdf).
 """, formatter_class=RawTextHelpFormatter)
 
-parser.add_argument("-n", "--nts", help="use the New Transliteration System for vailee", action="store_true")
-parser.add_argument("-d", "--date", help="""prints the date only""", action="store_true")
-parser.add_argument("-t", "--time", help="""prints the time only""", action="store_true")
-parser.add_argument("-c", "--clock", help="""prints the time only, in decimal format""", action="store_true")
-parser.add_argument("-v", "--vaileenum", help="""prints vaileetee as numbers""", action="store_true")
-parser.add_argument("-g", "--gahrtahvo", help="""use gahrtahvotee instead of pahrtahvotee""", action="store_true")
-parser.add_argument("-a", "--atrian", help="""use hahrtee fahrah instead of the full hahr""", action="store_true")
-parser.add_argument("-x", "--indate", nargs="+", type=int, default=[], help="input a Gregorian date to convert [YYYY MM DD HH MM SS]")
-parser.add_argument("-q", "--agm", help="print in AGM script format", action="store_true")
+parser.add_argument("-n", "--nts",       help="use the New Transliteration System for vailee", action="store_true")
+parser.add_argument("-d", "--date",      help="prints the date only",                          action="store_true")
+parser.add_argument("-t", "--time",      help="prints the time only",                          action="store_true")
+parser.add_argument("-c", "--clock",     help="prints the time only, in decimal format",       action="store_true")
+parser.add_argument("-v", "--vaileenum", help="prints vaileetee as numbers",                   action="store_true")
+parser.add_argument("-g", "--gahrtahvo", help="use gahrtahvotee instead of pahrtahvotee",      action="store_true")
+parser.add_argument("-a", "--atrian",    help="use hahrtee fahrah instead of the full hahr",   action="store_true")
+parser.add_argument("-x", "--indate",    help="input a Gregorian date to convert [YYYY MM DD HH MM SS]", nargs="+", type=int, default=[])
+parser.add_argument("-q", "--agm",       help="print in AGM script format",                    action="store_true")
 
 args = parser.parse_args()
 
