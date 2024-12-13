@@ -5,7 +5,7 @@ A collection of tools for the D’ni language, created by Richard A. Watson at C
 
 **agm_dates.sh**: prints a list of D’ni dates for the All Guild Meetings for the current (or a given) year, to be used by the AGM moderator. Requires *dnitime.py*.
 
-**convdnidate.py**: converts a D’ni date and time to the Gregorian calendar.
+**convdnidate.py**: converts a D’ni date and time to the [Gregorian calendar](https://en.wikipedia.org/wiki/Gregorian_calendar).
 
 **dninum.py**: converts numbers between base 10 and 25, with various formats (Dnifont, Alphanumeric, Brackets).
 
