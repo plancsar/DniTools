@@ -19,6 +19,7 @@ parser.add_argument("-n", "--nts",       help="use the New Transliteration Syste
 parser.add_argument("-d", "--date",      help="prints the date only",                          action="store_true")
 parser.add_argument("-t", "--time",      help="prints the time only",                          action="store_true")
 parser.add_argument("-c", "--clock",     help="prints the time only, in decimal format",       action="store_true")
+parser.add_argument("-s", "--short",     help="prints time and/or date in short form",         action="store_true")
 parser.add_argument("-v", "--vaileenum", help="prints vaileetee as numbers",                   action="store_true")
 parser.add_argument("-g", "--gahrtahvo", help="use gahrtahvotee instead of pahrtahvotee",      action="store_true")
 parser.add_argument("-a", "--atrian",    help="use hahrtee fahrah instead of the full hahr",   action="store_true")
@@ -153,18 +154,6 @@ if args.agm:
     print("%s %d, %d, and the time is %d:%02d:%02d" % \
       (vaileeName, yahr, hahr, pahrtahvo, tahvoP, gorahn))
 
-if args.date:
-    if args.atrian:
-        print("%d.%d.%d" % (atrian, int(vailee), yahr))
-    else:
-        print("%d.%d.%d" % (hahr, int(vailee), yahr))
-
-elif args.time:
-    if args.gahrtahvo:
-        print("%d:%02d:%02d:%02d" % (gahrtahvo, tahvoG, gorahn, prorahn))
-    else:
-        print("%d:%02d:%02d:%02d" % (pahrtahvo, tahvoP, gorahn, prorahn))
-
 elif args.clock:
     if args.gahrtahvo:
         gahrtahvo = gahrtahvo + tahvoG/25 + gorahn/625 + prorahn/15625
@@ -173,34 +162,29 @@ elif args.clock:
         pahrtahvo = pahrtahvo + tahvoP/5 + gorahn/125 + prorahn/3125
         print("%.4f" % (pahrtahvo))
 
-elif args.vaileenum:
-    if args.atrian:
-        if args.gahrtahvo:
-            print("%d.%d.%d, %d:%02d:%02d:%02d" % \
-              (atrian, int(vailee), yahr, gahrtahvo, tahvoG, gorahn, prorahn))
-        else:
-            print("%d.%d.%d, %d:%d:%02d:%02d" % \
-              (atrian, int(vailee), yahr, pahrtahvo, tahvoP, gorahn, prorahn))
-    else:
-        if args.gahrtahvo:
-            print("%d.%d.%d, %d:%02d:%02d:%02d" % \
-              (hahr, int(vailee), yahr, gahrtahvo, tahvoG, gorahn, prorahn))
-        else:
-            print("%d.%d.%d, %d:%d:%02d:%02d" % \
-              (hahr, int(vailee), yahr, pahrtahvo, tahvoP, gorahn, prorahn))
-
 else:
     if args.atrian:
-        if args.gahrtahvo:
-            print("%d %s %d, %d:%02d:%02d:%02d" % \
-              (atrian, vaileeName, yahr, gahrtahvo, tahvoG, gorahn, prorahn))
-        else:
-            print("%d %s %d, %d:%d:%02d:%02d" % \
-              (atrian, vaileeName, yahr, pahrtahvo, tahvoP, gorahn, prorahn))
+        dniyear = atrian
     else:
-        if args.gahrtahvo:
-            print("%d %s %d, %d:%02d:%02d:%02d" % \
-              (hahr, vaileeName, yahr, gahrtahvo, tahvoG, gorahn, prorahn))
-        else:
-            print("%d %s %d, %d:%d:%02d:%02d" % \
-              (hahr, vaileeName, yahr, pahrtahvo, tahvoP, gorahn, prorahn))
+        dniyear = hahr
+
+    if args.gahrtahvo:
+        dnihour = gahrtahvo
+        dnimin  = tahvoG
+    else:
+        dnihour = pahrtahvo
+        dnimin  = tahvoP
+
+    dnitime = "%d:%02d:%02d:%02d" % (dnihour, dnimin, gorahn, prorahn)
+
+    if args.short:
+        dnidate = "%d.%d.%d" % (dniyear, int(vailee), yahr)
+    else:
+        dnidate = "%d %s %d" % (dniyear, vaileeName, yahr)
+
+    if args.date:
+        print(dnidate)
+    elif args.time:
+        print(dnitime)
+    else:
+        print("%s, %s" % (dnidate, dnitime))
