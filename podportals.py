@@ -25,7 +25,7 @@ for ts in tstamps:
 
     while True:
         portal += timedelta(hours=15.718056)
-        if portal > datetime.now(timezone('UTC')):
+        if portal > datetime.now(timezone('UTC'))-timedelta(hours=6):
             break
 
     portal += timedelta(hours=2, minutes=-14, seconds=16)
@@ -127,7 +127,7 @@ else:
 
 
 
-# Timestamp: 2000-01-01T08:00:00Z
+# Timestamp: 1991-04-21T05:18:00Z
 startdate = datetime.fromtimestamp(672211080, tz=timezone('UTC') )
 sunrise = startdate
 
