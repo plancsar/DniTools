@@ -50,22 +50,14 @@ leapSecs = { 1972: -16, 1973: -14, 1974: -13, 1975: -12, 1976: -11, \
 # 10   Leenovoo    March 16 - April 21
 
 
-def leapsecs():
+def currtime():
     impdate = datetime.now(timezone.utc)
-
-    if impdate.year < 1972:
-        impdate = impdate - timedelta(seconds = 16)
-    elif impdate.year > 2020:
-        impdate = impdate + timedelta(seconds = 11)
-    else:
-        impdate = impdate + timedelta(seconds = leapSecs[year])
-
     return impdate.year, impdate.month, impdate.day, impdate.hour, impdate.minute, impdate.second
 
 
 
 def jday(year, mon, mday, hour, mnt, sec):
-    #for the current JD, run jday(*leapsecs())
+    #for the current JD, run jday(*currtime())
 
     month1 = mon
     year1 = year
@@ -87,12 +79,23 @@ def jday(year, mon, mday, hour, mnt, sec):
 
 
 def dnitime(year, mon, mday, hour, mnt, sec, textmonth=False, oldhour=False, shortyear=False):
-    #for the current D'ni time, run dnitime(*leapsecs(), textmonth=..., shortyear=...)
+    #for the current D'ni time, run dnitime(*currtime(), textmonth=..., shortyear=...)
 
-    month1 = mon
-    year1 = year
-    day1 = mday
-    hour1 = hour
+    impdate = datetime(year, mon, mday, hour, mnt, sec, tzinfo=timezone.utc)
+    
+    if impdate.year < 1972:
+        impdate = impdate - timedelta(seconds = 16)
+    elif impdate.year > 2020:
+        impdate = impdate + timedelta(seconds = 11)
+    else:
+        impdate = impdate + timedelta(seconds = leapSecs[year])
+
+    month1 = impdate.month
+    year1  = impdate.year
+    day1   = impdate.day
+    hour1  = impdate.hour
+    min1   = impdate.minute
+    sec1   = impdate.second
 
     # Algorithm 1. Gregorian Date to Julian Day Number
     if month1 < 3:
@@ -101,12 +104,12 @@ def dnitime(year, mon, mday, hour, mnt, sec, textmonth=False, oldhour=False, sho
 
     WD = day1 + int(((153 * month1) - 457) / 5) + floor(365.25 * year1) - \
          floor(0.01 * year1) + floor(0.0025 *  year1)
-    FD = ((hour1 * 3600) + (mnt * 60) + sec) / 86400
+    FD = ((hour1 * 3600) + (min1 * 60) + sec1) / 86400
     JD = WD + FD
 
     # Algorithm 6. Gregorian Date (Julian Day Number) to Cavernian Date
-    JDD = JD - 727249.704166666
-    AY = JDD * 0.793993705929756 + 1
+    JDD = JD  - 727249.704166666
+    AY  = JDD * 0.793993705929756 + 1
 
     # Algorithm 4. Atrian Yahr Number to Cavernian Date
     # (Added the pahrtahvo calculation)
