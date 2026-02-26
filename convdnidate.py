@@ -67,11 +67,12 @@ leapSecs = { 1972: -16, 1973: -14, 1974: -13, 1975: -12, 1976: -11, \
 
 (hahr, vailee, yahr, pahrtahvo, tahvoP, gorahn, prorahn) = args.indate
 
-
-# Algorithm 3. Cavernian Date to Atrian Yahr Number
+# (Modified) Algorithm 3. Cavernian Date to Atrian Yahr Number
+# The D'ni-to-Gregorian calculations use 9647 (1991 CE) as the century start,
+# but for in-game journal dates the baseline is 9375 (1719 CE)
 if args.atrian:
     atrian = hahr
-    WY = yahr + ((vailee - 1) * 29) + (atrian * 290)
+    WY = yahr + ((vailee - 1) * 29) + ((atrian - 272) * 290)
 else:
     WY = yahr + ((vailee - 1) * 29) + ((hahr - 9647) * 290)
 
