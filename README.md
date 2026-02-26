@@ -3,6 +3,8 @@ A collection of tools for the [D’ni language](https://archive.guildofarchivist
 
 **dnitime.py**: prints the current D’ni date and time, as [described](https://archive.guildofarchivists.org/wiki/D%27ni_time_conversion) in the Myst Online: Uru Live game.
 
+**dnitime_moul.py**: a version of *dnitime.py* modified to run in the MOUL client.
+
 **agm_dates.sh**: prints a list of D’ni dates for the [All Guild Meetings](https://archive.guildofarchivists.org/wiki/All_Guilds_Meeting) for the current (or a given) year, to be used by the AGM moderator. Requires *dnitime.py*.
 
 **convdnidate.py**: converts a D’ni date and time to the [Gregorian calendar](https://en.wikipedia.org/wiki/Gregorian_calendar).
