@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 from __future__ import division
@@ -161,3 +161,4 @@ elif args.dni:
                 sys.exit("At least one digit is too big!")
         result = dni2dec(map(float,args.dni))
         print("base10: %f" % (result))
+
