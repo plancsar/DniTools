@@ -79,6 +79,8 @@ leapSecs = { 1972: -16, 1973: -14, 1974: -13, 1975: -12, 1976: -11, \
 bce = 0
 if args.indate:
     (year, mon, mday, hour, mnt, sec) = args.indate
+    if args.julian:
+        (year, mon, mday) = julian.to_gregorian(year, mon, mday)
     if (year == 1 or year == 0) and (mon == 1 and mday == 1 and hour == 0 and mnt == 0 and sec <= 16):
         bce = 2 - year
         impdate = datetime(year+bce, mon, mday, hour, mnt, sec, tzinfo=timezone.utc)
@@ -86,8 +88,6 @@ if args.indate:
         impdate = datetime(1-year, mon, mday, hour, mnt, sec, tzinfo=timezone.utc)
         bce = 5
     elif year > 0:
-        if args.julian:
-            (year, mon, mday) = julian.to_gregorian(year, mon, mday)
         impdate = datetime(year, mon, mday, hour, mnt, sec, tzinfo=timezone.utc)
 else:
     impdate = datetime.now(timezone.utc)
