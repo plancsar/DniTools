@@ -4,7 +4,7 @@
 from __future__ import division
 from math import floor
 from datetime import datetime, timezone, timedelta
-import time
+from convertdate import julian
 import argparse
 from argparse import RawTextHelpFormatter
 
@@ -19,12 +19,13 @@ parser.add_argument("-n", "--nts",       help="use the New Transliteration Syste
 parser.add_argument("-d", "--date",      help="prints the date only",                          action="store_true")
 parser.add_argument("-t", "--time",      help="prints the time only",                          action="store_true")
 parser.add_argument("-c", "--clock",     help="prints the time only, in decimal format",       action="store_true")
-parser.add_argument("-s", "--short",     help="prints time and/or date in short form",         action="store_true")
-parser.add_argument("-v", "--vaileenum", help="prints vaileetee as numbers",                   action="store_true")
+parser.add_argument("-s", "--short",     help="prints vaileetee as numbers",                   action="store_true")
 parser.add_argument("-g", "--gahrtahvo", help="use gahrtahvotee instead of pahrtahvotee",      action="store_true")
 parser.add_argument("-a", "--atrian",    help="use hahrtee fahrah instead of the full hahr",   action="store_true")
-parser.add_argument("-x", "--indate",    help="input a Gregorian date to convert [YYYY MM DD HH MM SS]", nargs="+", type=int, default=[])
+parser.add_argument("-j", "--julian",    help="input is in the Julian (Old) Calendar",         action="store_true")
+parser.add_argument("-x", "--indate",    help="input a Gregorian/Julian date to convert [YYYY MM DD HH MM SS]", nargs="+", type=int, default=[])
 parser.add_argument("-q", "--agm",       help="print in AGM script format",                    action="store_true")
+parser.add_argument("-z", "--nosep",     help="like --short but with spaces for separator (handy for piping )", action="store_true")
 
 args = parser.parse_args()
 
@@ -73,28 +74,45 @@ leapSecs = { 1972: -16, 1973: -14, 1974: -13, 1975: -12, 1976: -11, \
 # 10   Leenovoo    March 16 - April 21
 
 # Baseline conversion date (UTC time), equivalent to 9647 Leefo 1, 00:00:00:00
-#(year, mon, mday, hour, min, sec) = (1991, 4, 21, 16, 54, 00)
+#(year, mon, mday, hour, mnt, sec) = (1991, 4, 21, 16, 54, 00)
 
-
+bce = 0
 if args.indate:
-    (year, mon, mday, hour, min, sec) = args.indate
-    impdate = datetime(year, mon, mday, hour, min, sec, tzinfo=timezone.utc)
+    (year, mon, mday, hour, mnt, sec) = args.indate
+    if (year == 1 or year == 0) and (mon == 1 and mday == 1 and hour == 0 and mnt == 0 and sec <= 16):
+        bce = 2 - year
+        impdate = datetime(year+bce, mon, mday, hour, mnt, sec, tzinfo=timezone.utc)
+    elif year <= 0:
+        impdate = datetime(1-year, mon, mday, hour, mnt, sec, tzinfo=timezone.utc)
+        bce = 5
+    elif year > 0:
+        if args.julian:
+            (year, mon, mday) = julian.to_gregorian(year, mon, mday)
+        impdate = datetime(year, mon, mday, hour, mnt, sec, tzinfo=timezone.utc)
 else:
     impdate = datetime.now(timezone.utc)
 
 # Checking for leap seconds
-if impdate.year < 1972:
+if bce > 0:
     impdate = impdate - timedelta(seconds = 16)
-elif impdate.year > 2020:
-    impdate = impdate + timedelta(seconds = 11)
 else:
-    impdate = impdate + timedelta(seconds = leapSecs[year])
+    if impdate.year < 1972:
+        impdate = impdate - timedelta(seconds = 16)
+    elif impdate.year > 2020:
+        impdate = impdate + timedelta(seconds = 11)
+    else:
+        impdate = impdate + timedelta(seconds = leapSecs[year])
 
+if bce > 2:
+    year1  = 1 - impdate.year
+elif bce > 0:
+    year1  = impdate.year - bce
+else:
+    year1  = impdate.year
 month1 = impdate.month
-year1  = impdate.year
 day1   = impdate.day
 hour1  = impdate.hour
-min1   = impdate.minute
+mnt1   = impdate.minute
 sec1   = impdate.second
 
 
@@ -105,7 +123,7 @@ if month1 < 3:
 
 WD = day1 + int(((153 * month1) - 457) / 5) + floor(365.25 * year1) - \
      floor(0.01 * year1) + floor(0.0025 *  year1)
-FD = ((hour1 * 3600) + (min1 * 60) + sec1) / 86400
+FD = ((hour1 * 3600) + (mnt1 * 60) + sec1) / 86400
 JD = WD + FD
 
 # Algorithm 6. Gregorian Date (Julian Day Number) to Cavernian Date
@@ -161,6 +179,10 @@ elif args.clock:
     else:
         pahrtahvo = pahrtahvo + tahvoP/5 + gorahn/125 + prorahn/3125
         print("%.4f" % (pahrtahvo))
+
+elif args.nosep:
+    print( "%d %d %d  %d %02d %02d %02d" % \
+      (hahr, int(vailee), yahr, pahrtahvo, tahvoP, gorahn, prorahn) )
 
 else:
     if args.atrian:
