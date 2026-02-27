@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import sys
@@ -50,7 +50,7 @@ if args.csv == "":
 	parser.print_usage()
 	sys.exit()
 
-csv_file = open(args.csv, 'rU')
+csv_file = open(args.csv, 'r')
 header = csv_file.readline().rstrip('\n') # keep the header for later
 
 for line in csv_file:
@@ -82,7 +82,7 @@ csv_file.close()
 list_ord = sorted(list_index, key=lambda word: [sortstring.index(c) for c in word])
 
 # print the list to the standard output
-print header
+print(header)
 for item in list_ord:
-	print list_unord[item]
+	print(list_unord[item])
 
