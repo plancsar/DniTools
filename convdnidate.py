@@ -4,22 +4,23 @@
 from __future__ import division
 from math import floor, ceil
 from datetime import datetime, timezone, timedelta
-import time
+from convertdate import julian
 import pytz
 import argparse
 from argparse import RawTextHelpFormatter
 
 parser = argparse.ArgumentParser(description="""
-Converts a D'ni date, as described in the Myst Online: Uru Live game by Cyan, Inc., to a Gregorian date.
+Converts a D'ni date, as described in the Myst Online: Uru Live game by Cyan, Inc., to a Gregorian/Julian date.
 The date can be given as Hahr:Vailee:Yahr (default) or Hahrtee_Fahrah:Vailee:Yahr.
 The time can be given as Pahrtahvo:Tahvo:Gorahn:Prorahn (default) or Gahrtahvo:Tahvo:Gorahn:Prorahn.
 Algorithms based on: Middleton B., 2004 - Date Conversion Techniques For the D'ni Scholar (http://home.earthlink.net/~seizuretown/myst/conversion/D%27ni%20Calendar%20Conversion.pdf).
 """, formatter_class=RawTextHelpFormatter)
 
-parser.add_argument("-d", "--date", help="""prints the date only""", action="store_true")
-parser.add_argument("-t", "--time", help="""prints the time only""", action="store_true")
-parser.add_argument("-g", "--gahrtahvo", help="""input use gahrtahvotee instead of pahrtahvotee""", action="store_true")
-parser.add_argument("-a", "--atrian", help="""input use hahrtee fahrah instead of the full hahr""", action="store_true")
+parser.add_argument("-d", "--date",      help="prints the date only", action="store_true")
+parser.add_argument("-t", "--time",      help="prints the time only", action="store_true")
+parser.add_argument("-j", "--julian",    help="output date (if year > 0) in the Julian (Old) Calendar", action="store_true")
+parser.add_argument("-g", "--gahrtahvo", help="input use gahrtahvotee instead of pahrtahvotee", action="store_true")
+parser.add_argument("-a", "--atrian",    help="input use hahrtee fahrah instead of the full hahr", action="store_true")
 parser.add_argument("indate", nargs="+", type=int, action="store", help="input a D'ni date to convert [HHHH VV YY PT T GG PR]")
 
 args = parser.parse_args()
@@ -39,7 +40,8 @@ leapSecs = { 1972: -16, 1973: -14, 1974: -13, 1975: -12, 1976: -11, \
              2002:   6, 2003:   6, 2004:   6, 2005:   7, 2006:   7, \
              2007:   7, 2008:   8, 2009:   8, 2010:   8, 2011:   8, \
              2012:   9, 2013:   9, 2014:   9, 2015:  10, 2016:  11, \
-             2017:  11, 2018:  11, 2019:  11, 2020:  11 }
+             2017:  11, 2018:  11, 2019:  11, 2020:  11, 2021:  11, \
+             2022:  11, 2023:  11, 2024:  11, 2025:  11 }
 
 # Prorahn                          ~ 1.39 seconds
 # Gorahn           25 prorahn     ~ 34.8  seconds
@@ -104,22 +106,24 @@ if month > 12:
     year = year + 1
     month = month - 12
 
-# bce = "CE"
-# if year < 1:
-#     year = 1 - year
-#     bce = "BCE"
-
 Z = (JD - floor(JD)) * 86400
 hour = int(Z / 3600)
 R = Z - (hour * 3600)
 minute = int(R / 60)
 second = R - (minute * 60)
 
-
 day = floor(day + 0.75)  # not sure why, but this fixes a rounding error
 second = ceil(second)
 if second > 59: second = second - 1
 
+bce = "CE"
+if year < 1:
+    year = 1 - year
+    bce = "BCE"
+elif args.julian:
+    (year, month, day) = julian.from_gregorian(year, month, day)
+    bce = "OC"
+    
 outdate_utc = datetime(year, month, day, hour, minute, second, tzinfo=timezone.utc)
 
 # Checking for leap seconds
@@ -133,6 +137,5 @@ else:
 outdate_ki = outdate_utc.astimezone(pytz.timezone('America/Denver'))
 
 # Time format displays
-print(outdate_utc.strftime('%B %d, %Y, %H:%M:%S %Z'))
-print(outdate_ki.strftime('%B %d, %Y, %H:%M:%S %Z'))
-# print(outdate_utc.strftime('%Y %m %d %H %M %S'))
+print(outdate_utc.strftime('%d %B %Y ') + bce + outdate_utc.strftime(', %H:%M:%S %Z'))
+print( outdate_ki.strftime('%d %B %Y ') + bce +  outdate_ki.strftime(', %H:%M:%S %Z'))
