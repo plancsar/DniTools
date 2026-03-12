@@ -3,8 +3,6 @@ A collection of tools for the [D’ni language](https://archive.guildofarchivist
 
 **dnitime.py**: prints the current D’ni date and time, as [described](https://archive.guildofarchivists.org/wiki/D%27ni_time_conversion) in the Myst Online: Uru Live game.
 
-**dnitime_moul.py**: a version of *dnitime.py* modified to run in the MOUL client.
-
 **agm_dates.sh**: prints a list of D’ni dates for the [All Guild Meetings](https://archive.guildofarchivists.org/wiki/All_Guilds_Meeting) for the current (or a given) year, to be used by the AGM moderator. Requires *dnitime.py*.
 
 **convdnidate.py**: converts a D’ni date and time to the [Gregorian calendar](https://en.wikipedia.org/wiki/Gregorian_calendar).
@@ -12,6 +10,8 @@ A collection of tools for the [D’ni language](https://archive.guildofarchivist
 **dninum.py**: converts [numbers](https://archive.guildofarchivists.org/wiki/D%27ni_numerals) between base 10 and 25, with various formats (Dnifont, Alphanumeric, Brackets).
 
 **dniroman.py**: converts a line of text in D’ni to and from various [transliterations](https://archive.guildofarchivists.org/wiki/D%27ni_(language)#Transliteration).
+
+** \*_moul.py**: versions of the above scripts modified to run in the MOUL client.
 
 **podportals.py**: a predictor for the [Pod Ages](https://archive.guildofarchivists.org/wiki/Pod_Age), for [Eder Gira](https://archive.guildofarchivists.org/wiki/Eder_Gira) and for [Eder Naybree](https://archive.guildofarchivists.org/wiki/Eder_Naybree) sunrise/sunset.
 
