@@ -10,7 +10,7 @@ $0 [YEAR]
 
 This script print the dates of the All Guilds Meetings for the current year, and the equivalent D’ni dates (calculated using dnitime.py). If a year is given, it will calculate the dates for that year.
 
-    In the D'ni calendar it's Leevosahn 2, 9681, and the time is 19:00:21.
+    2026-01-03 #189  In the D'ni calendar it's Leevosahn 2, 9681, and the time is 19:00:21.
 
 When using the -m parameter, the script will instead list the D’ni dates for the beginning and endings of the months.
 
