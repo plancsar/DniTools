@@ -1,30 +1,28 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from __future__ import print_function
-
 import argparse
 from argparse import RawTextHelpFormatter
 
 parser = argparse.ArgumentParser(description="""
 Converts D'ni sentences or numbers between different romanization systems.
 
-EITHER enter a sentence OR a number, the program cannot parse both at the same
-time, UNLESS between Dnifont and UCSUR. Examples:
+EITHER enter a sentence OR a number, the script cannot parse both at the same time, UNLESS between Dnifont and UCSUR. Examples:
 
-dniroman.py ".khahpo rehzuhnuh rildolgehlehnij gahth"
-Dnifont:  .kapo rezunu rilDolgelenij gaT
-NTS:      .xapo rezunu rildolgelenij gaþ
-LTS:      .khapo rezunu rildolgelenij gath
-RTS:      .khahpo rezunu rildolgelenij gahth
-UCSUR:       
+dniroman.py ".kenen voohee shuhteejoo"
+Dnifont:     .Kenen vUhE SutEjU
+NTS:         .kenen vúhí šutíjú
+IPA:        /.kɛnɛn vuhi ʃətid͡ʒu/
+LTS:         .kenen vūhē shutējū
+RTS:         .kenen voohee shuteejoo
+UCSUR:         
 
-dniroman.py -b "[10|15|20]"
-Dnifont:  )%[
+dniroman.py -b '10|15|20'
+Dnifont:   )%[
 Alphanum:  AFK
 """, formatter_class=RawTextHelpFormatter)
 
-parser.add_argument("-x", "--names", help="Also fix common spellings, e.g. Kadish -> Kaydish", action="store_true")
+parser.add_argument("-x", "--names", help="DO NOT fix common spellings, e.g. Kadish -> Kaydish", action="store_false")
 parser.add_argument("phrase", help="input is Old Transliteration Standard (default)", type=str, action="store")
 format = parser.add_mutually_exclusive_group()
 format.add_argument("-n", "--nts",   help="input is New Transliteration Standard",     action="store_true")
@@ -32,12 +30,13 @@ format.add_argument("-f", "--dfont", help="input is Dnifont / RAWA's translitera
 format.add_argument("-l", "--lts",   help="input is Larry's Transliteration Standard", action="store_true")
 format.add_argument("-r", "--rts",   help="input is Revised Transliteration Standard", action="store_true")
 format.add_argument("-u", "--ucsur", help="input is Under-ConScript Unicode Registry", action="store_true")
-format.add_argument("-b", "--brack", help="Digits as brackets: \"[10|11|12]\"",        action="store_true")
-format.add_argument("-d", "--nfont", help="Digits as Dnifont: \")!@\"",                action="store_true")
-format.add_argument("-a", "--alpha", help="Digits as alphanumeric: \"ABC\"",           action="store_true")
+format.add_argument("-b", "--brack", help="input is brackets: '10|15|20' (put divisor only between digits)", action="store_true")
+format.add_argument("-d", "--nfont", help="input is Dnifont: ')%%[' (be sure to use single quotes to avoid history expansion)", action="store_true")
+format.add_argument("-a", "--alpha", help="input is alphanumeric: 'AFK' (0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O)", action="store_true")
 args = parser.parse_args()
 
 
+# ALPHABETICAL CONVERSION FUNCTIONS
 
 def ots2nts(in_ots):
     out_nts = in_ots.replace(u"ch", u"ç")
@@ -66,9 +65,9 @@ def ots2nts(in_ots):
     out_nts = out_nts.replace(u"ay", u"é")
     out_nts = out_nts.replace(u"Ay", u"É")
     out_nts = out_nts.replace(u"AY", u"É")
-    out_nts = out_nts.replace(u"ai", u"é")
-    out_nts = out_nts.replace(u"Ai", u"É")
-    out_nts = out_nts.replace(u"AI", u"É")
+    out_nts = out_nts.replace(u"ai", u"á")
+    out_nts = out_nts.replace(u"Ai", u"Á")
+    out_nts = out_nts.replace(u"AI", u"Á")
     out_nts = out_nts.replace(u"ee", u"í")
     out_nts = out_nts.replace(u"Ee", u"Í")
     out_nts = out_nts.replace(u"EE", u"Í")
@@ -139,6 +138,53 @@ def ots2nts(in_ots):
         out_nts = out_nts.replace(u"WHÆRK", u"WARK")
         out_nts = out_nts.replace(u"Yíšæ", u"Yíša")
         out_nts = out_nts.replace(u"YÍŠÆ", u"YÍŠA")
+        out_nts = out_nts.replace(u"Sæmíhn", u"Sameen")
+        out_nts = out_nts.replace(u"SÆMÍHN", u"SAMEEN")
+        out_nts = out_nts.replace(u"Samíhn", u"sameen")
+        out_nts = out_nts.replace(u"SAMÍHN", u"SAMEEN")
+
+        out_nts = out_nts.replace(u"re'rot", u"reh'rot")
+        out_nts = out_nts.replace(u"Re'rot", u"Reh'rot")
+        out_nts = out_nts.replace(u"RE'ROT", u"REH'ROT")
+        out_nts = out_nts.replace(u"re’rot", u"reh’rot")
+        out_nts = out_nts.replace(u"Re’rot", u"Reh’rot")
+        out_nts = out_nts.replace(u"RE’ROT", u"REH’ROT")
+        out_nts = out_nts.replace(u"reapo", u"rehapo")
+        out_nts = out_nts.replace(u"Reapo", u"Rehapo")
+        out_nts = out_nts.replace(u"REAPO", u"REHAPO")
+        out_nts = out_nts.replace(u"rear", u"rehar")
+        out_nts = out_nts.replace(u"Rear", u"Rehar")
+        out_nts = out_nts.replace(u"REAR", u"REHAR")
+        out_nts = out_nts.replace(u"reaza", u"rehaza")
+        out_nts = out_nts.replace(u"Reaza", u"Rehaza")
+        out_nts = out_nts.replace(u"REAZA", u"REHAZA")
+        out_nts = out_nts.replace(u"reévu", u"rehévu")
+        out_nts = out_nts.replace(u"Reévu", u"Rehévu")
+        out_nts = out_nts.replace(u"REÉVU", u"REHÉVU")
+        out_nts = out_nts.replace(u"reíbor", u"rehíbor")
+        out_nts = out_nts.replace(u"Reíbor", u"Rehíbor")
+        out_nts = out_nts.replace(u"REÍBOR", u"REHÍBOR")
+        out_nts = out_nts.replace(u"reík", u"rehík")
+        out_nts = out_nts.replace(u"Reík", u"Rehík")
+        out_nts = out_nts.replace(u"REÍK", u"REHÍK")
+        out_nts = out_nts.replace(u"Reer", u"Reher")
+        out_nts = out_nts.replace(u"reer", u"reher")
+        out_nts = out_nts.replace(u"REER", u"REHER")
+        out_nts = out_nts.replace(u"reev", u"rehev")
+        out_nts = out_nts.replace(u"Reev", u"Rehev")
+        out_nts = out_nts.replace(u"REEV", u"REHEV")
+        out_nts = out_nts.replace(u"reoša", u"rehoša")
+        out_nts = out_nts.replace(u"Reoša", u"Rehoša")
+        out_nts = out_nts.replace(u"REOŠA", u"REHOŠA")
+        out_nts = out_nts.replace(u"reúr", u"rehúr")
+        out_nts = out_nts.replace(u"Reúr", u"Rehúr")
+        out_nts = out_nts.replace(u"REÚR", u"REHÚR")
+        out_nts = out_nts.replace(u"reúsaté", u"rehúsaté")
+        out_nts = out_nts.replace(u"Reúsaté", u"Rehúsaté")
+        out_nts = out_nts.replace(u"REÚSATÉ", u"REHÚSATÉ")
+        out_nts = out_nts.replace(u"reúcé", u"rehúcé")
+        out_nts = out_nts.replace(u"Reúcé", u"Rehúcé")
+        out_nts = out_nts.replace(u"REÚCÉ", u"REHÚCÉ")
     return out_nts
 
 def nts2ots(in_nts):
@@ -223,10 +269,14 @@ def nts2ots(in_nts):
         out_ots = out_ots.replace(u"WHAhRK", u"WAHRK")
         out_ots = out_ots.replace(u"yeeshah", u"Yeeshah")
         out_ots = out_ots.replace(u"YEeSHAh", u"YEESHAH")
+        out_ots = out_ots.replace(u"sahmeen", u"Sahmeehn")
+        out_ots = out_ots.replace(u"Sahmeen", u"Sahmeehn")
+        out_ots = out_ots.replace(u"SAhMEEN", u"SAHMEEHN")
     return out_ots
 
 def nts2dfont(in_nts):
-    out_dfont =    in_nts.replace(u"æ", u"å")
+    out_dfont =    in_nts.lower()
+    out_dfont = out_dfont.replace(u"æ", u"å")
     out_dfont = out_dfont.replace(u"ú", u"U")
     out_dfont = out_dfont.replace(u"ó", u"O")
     out_dfont = out_dfont.replace(u"í", u"E")
@@ -276,7 +326,8 @@ def dfont2nts(in_dfont):
     return out_nts
 
 def nts2ipa(in_nts):
-    out_ipa =  in_nts.replace(u"'", u"ɜ")
+    out_ipa =  in_nts.lower()
+    out_ipa = out_ipa.replace(u"'", u"ɜ")
     out_ipa = out_ipa.replace(u"’", u"ɜ")
     out_ipa = out_ipa.replace(u"š", u"ʃ")
     out_ipa = out_ipa.replace(u"j", u"d͡ʒ")
@@ -495,6 +546,53 @@ def ots2rts(in_ots):
         out_rts = out_rts.replace(u"yeesha", u"yeeshah")
         out_rts = out_rts.replace(u"Yeesha", u"Yeeshah")
         out_rts = out_rts.replace(u"YEESHA", u"YEESHAH")
+        out_rts = out_rts.replace(u"Sameen", u"Sahmeehn")
+        out_rts = out_rts.replace(u"SAMEEN", u"SAHMEEHN")
+        out_rts = out_rts.replace(u"Sahmeen", u"Sahmeehn")
+        out_rts = out_rts.replace(u"SAHMEEN", u"SAHMEEHN")
+
+        out_rts = out_rts.replace(u"re'rot", u"reh'rot")
+        out_rts = out_rts.replace(u"Re'rot", u"Reh'rot")
+        out_rts = out_rts.replace(u"RE'ROT", u"REH'ROT")
+        out_rts = out_rts.replace(u"re’rot", u"reh’rot")
+        out_rts = out_rts.replace(u"Re’rot", u"Reh’rot")
+        out_rts = out_rts.replace(u"RE’ROT", u"REH’ROT")
+        out_rts = out_rts.replace(u"reahpo", u"rehahpo")
+        out_rts = out_rts.replace(u"Reahpo", u"Rehahpo")
+        out_rts = out_rts.replace(u"REAHPO", u"REHAHPO")
+        out_rts = out_rts.replace(u"reahr", u"rehahr")
+        out_rts = out_rts.replace(u"Reahr", u"Rehahr")
+        out_rts = out_rts.replace(u"REAHR", u"REHAHR")
+        out_rts = out_rts.replace(u"reahzah", u"rehahzah")
+        out_rts = out_rts.replace(u"Reahzah", u"Rehahzah")
+        out_rts = out_rts.replace(u"REAHZAH", u"REHAHZAH")
+        out_rts = out_rts.replace(u"reeivuh", u"reheivuh")
+        out_rts = out_rts.replace(u"Reeivuh", u"Reheivuh")
+        out_rts = out_rts.replace(u"REEIVUH", U"REHEIVUH")
+        out_rts = out_rts.replace(u"reeebor", u"reheebor")
+        out_rts = out_rts.replace(u"Reeebor", u"Reheebor")
+        out_rts = out_rts.replace(u"REEEBOR", u"REHEEBOR")
+        out_rts = out_rts.replace(u"reeek", u"reheek")
+        out_rts = out_rts.replace(u"Reeek", u"Reheek")
+        out_rts = out_rts.replace(u"REEEK", u"REHEEK")
+        out_rts = out_rts.replace(u"Reer", u"Reher")
+        out_rts = out_rts.replace(u"reer", u"reher")
+        out_rts = out_rts.replace(u"REER", u"REHER")
+        out_rts = out_rts.replace(u"reev", u"rehev")
+        out_rts = out_rts.replace(u"Reev", u"Rehev")
+        out_rts = out_rts.replace(u"REEV", u"REHEV")
+        out_rts = out_rts.replace(u"reoshah", u"rehoshah")
+        out_rts = out_rts.replace(u"Reoshah", u"Rehoshah")
+        out_rts = out_rts.replace(u"REOSHAH", u"REHOSHAH")
+        out_rts = out_rts.replace(u"reoor", u"rehoor")
+        out_rts = out_rts.replace(u"Reoor", u"Rehoor")
+        out_rts = out_rts.replace(u"REOOR", u"REHOOR")
+        out_rts = out_rts.replace(u"reoosahtei", u"rehoosahtei")
+        out_rts = out_rts.replace(u"Reoosahtei", u"Rehoosahtei")
+        out_rts = out_rts.replace(u"REOOSAHTEI", U"REHOOSAHTEI")
+        out_rts = out_rts.replace(u"reootsei", u"rehootsei")
+        out_rts = out_rts.replace(u"Reootsei", u"Rehootsei")
+        out_rts = out_rts.replace(u"REOOTSEI", U"REHOOTSEI")
     return out_rts
 
 def rts2ots(in_rts):
@@ -712,8 +810,12 @@ def ucsur2dfont(in_ucsur):
     out_dfont = out_dfont.replace(u"", u"Z")
     return out_dfont
 
+
+# NUMERICAL CONVERSION FUNCTIONS
+
 def brack2alpha(in_brack):
-    out_alpha =  in_brack.replace(u"|", u"][")
+    out_alpha = "[" + in_brack + "]"
+    out_alpha = out_alpha.replace(u"|", u"][")
     out_alpha = out_alpha.replace(u"[0]", u"0")
     out_alpha = out_alpha.replace(u"[1]", u"1")
     out_alpha = out_alpha.replace(u"[2]", u"2")
@@ -822,31 +924,33 @@ def dfont2alpha(in_dfont):
 
 
 
+# INPUT/OUTPUT
+
 args.phrase = args.phrase.strip()
 
 if args.nts:
-    nts = args.phrase
-    ots = nts2ots(nts)
-    lts = nts2lts(nts)
-    rts = ots2rts(ots)
-    dfont = nts2dfont(nts.lower())
+    nts   = args.phrase
+    ots   = nts2ots(nts)
+    lts   = nts2lts(nts)
+    rts   = ots2rts(ots)
+    dfont = nts2dfont(nts)
     ucsur = dfont2ucsur(dfont)
-    ipa = nts2ipa(nts.lower())
+    ipa   = nts2ipa(nts)
     print("OTS:     ", ots)
     print("Dnifont: ", dfont)
-    print("IPA:     [" + ipa + "]")
+    print("IPA:     /" + ipa + "/")
     print("LTS:     ", lts)
     print("RTS:     ", rts)
     print("UCSUR:   ", ucsur)
 
 elif args.dfont:
     dfont = args.phrase
-    nts = dfont2nts(dfont)
-    ots = nts2ots(nts)
-    lts = nts2lts(nts)
-    rts = ots2rts(ots)
+    nts   = dfont2nts(dfont)
+    ots   = nts2ots(nts)
+    lts   = nts2lts(nts)
+    rts   = ots2rts(ots)
     ucsur = dfont2ucsur(dfont)
-    ipa = nts2ipa(nts.lower())
+    ipa   = nts2ipa(nts)
     print("OTS:   ", ots)
     print("NTS:   ", nts)
     print("IPA:   /" + ipa + "/")
@@ -855,82 +959,85 @@ elif args.dfont:
     print("UCSUR: ", ucsur)
 
 elif args.lts:
-    lts = args.phrase
-    nts = lts2nts(lts)
-    ots = nts2ots(nts)
-    rts = ots2rts(ots)
-    dfont = nts2dfont(nts.lower())
+    lts   = args.phrase
+    nts   = lts2nts(lts)
+    ots   = nts2ots(nts)
+    rts   = ots2rts(ots)
+    dfont = nts2dfont(nts)
     ucsur = dfont2ucsur(dfont)
-    ipa = nts2ipa(nts.lower())
+    ipa   = nts2ipa(nts)
     print("OTS:     ", ots)
     print("NTS:     ", nts)
     print("Dnifont: ", dfont)
-    print("IPA:     [" + ipa + "]")
+    print("IPA:     /" + ipa + "/")
     print("RTS:     ", rts)
     print("UCSUR:   ", ucsur)
 
 elif args.rts:
-    rts = args.phrase
-    ots = rts2ots(rts)
-    nts = ots2nts(ots)
-    lts = nts2lts(nts)
-    dfont = nts2dfont(nts.lower())
+    rts   = args.phrase
+    ots   = rts2ots(rts)
+    nts   = ots2nts(ots)
+    lts   = nts2lts(nts)
+    dfont = nts2dfont(nts)
     ucsur = dfont2ucsur(dfont)
-    ipa = nts2ipa(nts.lower())
+    ipa   = nts2ipa(nts)
     print("OTS:     ", ots)
     print("NTS:     ", nts)
     print("Dnifont: ", dfont)
-    print("IPA:     [" + ipa + "]")
+    print("IPA:     /" + ipa + "/")
     print("LTS:     ", lts)
     print("UCSUR:   ", ucsur)
 
 elif args.ucsur:
     ucsur = args.phrase
     dfont = ucsur2dfont(ucsur)
-    nts = dfont2nts(dfont)
-    ots = nts2ots(nts)
-    lts = nts2lts(nts)
-    rts = ots2rts(ots)
-    ipa = nts2ipa(nts.lower())
+    nts   = dfont2nts(dfont)
+    ots   = nts2ots(nts)
+    lts   = nts2lts(nts)
+    rts   = ots2rts(ots)
+    ipa   = nts2ipa(nts)
     print("OTS:     ", ots)
     print("NTS:     ", nts)
     print("Dnifont: ", dfont)
-    print("IPA:     [" + ipa + "]")
+    print("IPA:     /" + ipa + "/")
     print("LTS:     ", lts)
     print("RTS:     ", rts)
     
 elif args.brack:
     brack = args.phrase
+    brack = brack.replace('[', '')
+    brack = brack.replace(']', '')
     alpha = brack2alpha(brack)
     nfont = alpha2dfont(alpha)
-    print("Dnifont: ", nfont)
-    print("Alpha:   ", alpha)
+    print("Dnifont:  ", nfont)
+    print("Alphanum: ", alpha)
 
 elif args.nfont:
     nfont = args.phrase
     alpha = dfont2alpha(nfont)
     brack = alpha2brack(alpha)
     print("Brackets: ", brack)
-    print("Alpha:    ", alpha)
+    print("Alphanum: ", alpha)
 
 elif args.alpha:
     alpha = args.phrase
-    brack = alpha2brack(alpha.upper())
-    nfont = alpha2dfont(alpha.upper())
+    alpha = alpha.upper()
+    brack = alpha2brack(alpha)
+    nfont = alpha2dfont(alpha)
     print("Dnifont:  ", nfont)
     print("Brackets: ", brack)
 
 else:
-    ots = args.phrase
-    nts = ots2nts(ots)
-    dfont = nts2dfont(nts.lower())
-    ipa = nts2ipa(nts.lower())
-    lts = nts2lts(nts)
-    rts = ots2rts(ots)
+    ots   = args.phrase
+    nts   = ots2nts(ots)
+    dfont = nts2dfont(nts)
+    ipa   = nts2ipa(nts)
+    lts   = nts2lts(nts)
+    rts   = ots2rts(ots)
     ucsur = dfont2ucsur(dfont)
     print("Dnifont: ", dfont)
     print("NTS:     ", nts)
-    print("IPA:     [" + ipa + "]")
+    print("IPA:     /" + ipa + "/")
     print("LTS:     ", lts)
     print("RTS:     ", rts)
     print("UCSUR:   ", ucsur)
