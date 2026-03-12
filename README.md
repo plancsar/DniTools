@@ -11,7 +11,7 @@ A collection of tools for the [D’ni language](https://archive.guildofarchivist
 
 **dniroman.py**: converts a line of text in D’ni to and from various [transliterations](https://archive.guildofarchivists.org/wiki/D%27ni_(language)#Transliteration).
 
-**\*_moul.py**: versions of the above scripts modified to run in the MOUL client.
+**\*_moul.py**: versions of the above scripts modified to run in the H’uru client.
 
 **podportals.py**: a predictor for the [Pod Ages](https://archive.guildofarchivists.org/wiki/Pod_Age), for [Eder Gira](https://archive.guildofarchivists.org/wiki/Eder_Gira) and for [Eder Naybree](https://archive.guildofarchivists.org/wiki/Eder_Naybree) sunrise/sunset.
 
