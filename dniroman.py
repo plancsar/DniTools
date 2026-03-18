@@ -175,7 +175,9 @@ def ots2nts(in_ots):
         out_nts = out_nts.replace(u"REÚCÉ", u"REHÚCÉ")
 
         if out_nts[-1] == u"æ": out_nts = out_nts[:-1] + u"a"
+        if out_nts[-1] == u"Æ": out_nts = out_nts[:-1] + u"A"
         if out_nts[-1] == u"i": out_nts = out_nts[:-1] + u"í"
+        if out_nts[-1] == u"I": out_nts = out_nts[:-1] + u"Í"
     return out_nts
 
 def nts2ots(in_nts):
