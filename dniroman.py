@@ -105,18 +105,12 @@ def ots2nts(in_ots):
         out_nts = out_nts.replace(u"cænnen", u"kænen")
         out_nts = out_nts.replace(u"Cænnen", u"Kænen")
         out_nts = out_nts.replace(u"CÆNNEN", u"KÆNEN")
-        out_nts = out_nts.replace(u"D'ni", u"D'ní")
-        out_nts = out_nts.replace(u"D'NI", u"D'NÍ")
-        out_nts = out_nts.replace(u"D’ni", u"D’ní")
-        out_nts = out_nts.replace(u"D’NI", u"D’NÍ")
         out_nts = out_nts.replace(u"Ghen", u"Gen")
         out_nts = out_nts.replace(u"GHEN", u"GEN")
         out_nts = out_nts.replace(u"Er'cænæ", u"Er'kana")
         out_nts = out_nts.replace(u"ER'CÆNÆ", u"ER'KANA")
         out_nts = out_nts.replace(u"Er’cænæ", u"Er’kana")
         out_nts = out_nts.replace(u"ER’CÆNÆ", u"ER’KANA")
-        out_nts = out_nts.replace(u"Giræ", u"Gira")
-        out_nts = out_nts.replace(u"GIRÆ", u"GIRA")
         out_nts = out_nts.replace(u"Jælæk", u"Jalak")
         out_nts = out_nts.replace(u"JÆLÆK", u"JALAK")
         out_nts = out_nts.replace(u"Kædiš", u"Kédiš")
@@ -125,10 +119,6 @@ def ots2nts(in_ots):
         out_nts = out_nts.replace(u"KEMO", u"KÍMO")
         out_nts = out_nts.replace(u"Minkætæ", u"Minkata")
         out_nts = out_nts.replace(u"MINKÆTÆ", u"MINKATA")
-        out_nts = out_nts.replace(u"Tolesæ", u"Tolesa")
-        out_nts = out_nts.replace(u"TOLESÆ", u"TOLESA")
-        out_nts = out_nts.replace(u"Tomænæ", u"Tomana")
-        out_nts = out_nts.replace(u"TOMÆNÆ", u"TOMANA")
         out_nts = out_nts.replace(u"Tomæn", u"Toman")
         out_nts = out_nts.replace(u"TOMÆN", u"TOMAN")
         out_nts = out_nts.replace(u"Cogæl", u"Cogal")
@@ -136,8 +126,6 @@ def ots2nts(in_ots):
         out_nts = out_nts.replace(u"whærk", u"wark")
         out_nts = out_nts.replace(u"Whærk", u"Wark")
         out_nts = out_nts.replace(u"WHÆRK", u"WARK")
-        out_nts = out_nts.replace(u"Yíšæ", u"Yíša")
-        out_nts = out_nts.replace(u"YÍŠÆ", u"YÍŠA")
         out_nts = out_nts.replace(u"Sæmíhn", u"Sameen")
         out_nts = out_nts.replace(u"SÆMÍHN", u"SAMEEN")
         out_nts = out_nts.replace(u"Samíhn", u"sameen")
@@ -185,6 +173,9 @@ def ots2nts(in_ots):
         out_nts = out_nts.replace(u"reúcé", u"rehúcé")
         out_nts = out_nts.replace(u"Reúcé", u"Rehúcé")
         out_nts = out_nts.replace(u"REÚCÉ", u"REHÚCÉ")
+
+        if out_nts[-1] == u"æ": out_nts = out_nts[:-1] + u"a"
+        if out_nts[-1] == u"i": out_nts = out_nts[:-1] + u"í"
     return out_nts
 
 def nts2ots(in_nts):
