@@ -65,4 +65,7 @@ def dniroman(dnitext, typos=True):
         dfont = dfont.replace(u"reUsåtA", u"rehUsatA")
         dfont = dfont.replace(u"reUsatA", u"rehUsatA")
         dfont = dfont.replace(u"reUxA", u"rehUxA")
+        
+        if dfont[-1] == u"å": dfont = dfont[:-1] + u"a"
+        if dfont[-1] == u"i": dfont = dfont[:-1] + u"E"
     return dfont
