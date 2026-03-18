@@ -3,10 +3,12 @@
 
 def dniroman(dnitext, typos=True):
     dfont = dnitext.lower()
+    dfont = dfont.replace(u"k", u"K")
+    dfont = dfont.replace(u"d", u"D")
     dfont = dfont.replace(u"ch", u"c")
     dfont = dfont.replace(u"ts", u"x")
-    dfont = dfont.replace(u"kh", u"k")
-    dfont = dfont.replace(u"dh", u"d")
+    dfont = dfont.replace(u"Kh", u"k")
+    dfont = dfont.replace(u"Dh", u"d")
     dfont = dfont.replace(u"sh", u"S")
     dfont = dfont.replace(u"th", u"T")
     dfont = dfont.replace(u"ih", u"i")
@@ -21,7 +23,7 @@ def dniroman(dnitext, typos=True):
     dfont = dfont.replace(u"uh", u"u")
     if typos:
         dfont = dfont.replace(u"åe'gurå", u"å'gura")
-        dfont = dfont.replace(u"aitrus", u"Atrus")
+        dfont = dfont.replace(u"Itrus", u"Atrus")
         dfont = dfont.replace(u"åtrus", u"Atrus")
         dfont = dfont.replace(u"xånnen", u"Kånen")
         dfont = dfont.replace(u"D'ni", u"D'nE")
