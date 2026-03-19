@@ -164,4 +164,4 @@ def dnitime(year, mon, mday, hour, mnt, sec, textmonth=False, oldhour=False, sho
     return [dniyear, dnimonth, yahr, dnihour, dnimin, gorahn, prorahn]
 
 def dnitimenow(textmonth=False, oldhour=False, shortyear=False):
-    dnitime(*currtime(), textmonth, oldhour, shortyear)
+    return dnitime(*currtime(), textmonth, oldhour, shortyear)
