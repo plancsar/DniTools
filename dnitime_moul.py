@@ -79,8 +79,6 @@ def jday(year, mon, mday, hour, mnt, sec):
 
 
 def dnitime(year, mon, mday, hour, mnt, sec, textmonth=False, oldhour=False, shortyear=False):
-    #for the current D'ni time, run dnitime(*currtime(), textmonth=..., shortyear=...)
-
     impdate = datetime(year, mon, mday, hour, mnt, sec, tzinfo=timezone.utc)
     
     if impdate.year < 1972:
@@ -164,3 +162,6 @@ def dnitime(year, mon, mday, hour, mnt, sec, textmonth=False, oldhour=False, sho
         dniyear = hahr
 
     return [dniyear, dnimonth, yahr, dnihour, dnimin, gorahn, prorahn]
+
+def dnitimenow(textmonth=False, oldhour=False, shortyear=False):
+    dnitime(*currtime(), textmonth, oldhour, shortyear)
